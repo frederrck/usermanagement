@@ -8,9 +8,33 @@
     <link rel="stylesheet" href="static/main.css">
 </head>
 <body>
+    <!-- Navigation Bar-->
+    <nav>
+    <div class="navbar-container">
+        <div class="navbar-logo"><img src="static/images/b_logo.png" alt="Logo">BeatBulletin</div>
+        <div class="search-bar">
+        <input type="text" placeholder="Search">
+        <button type="submit">Search</button>
+        </div>
+        <div class="right-menu">
+        {% if session["logged_in"] %}
+        Welcome, {{ session["first_name"] }}! ({{session["role"]}})
+        <button class="upload-btn">Upload</button>
+        <button class="profile-btn">My Profile</button>
+        <a href="/logout">Log out</a>
+        {% else %}
+            You are not logged in.
+            <a href="/login">Login</a>
+            <a href="/signup">Sign Up!</a>
+        {% endif %}
+        </div>
+    </div>
+    </nav>
     <nav>
         {% if session["logged_in"] %}
             Welcome, {{ session["first_name"] }}! ({{session["role"]}})
+            <button class="upload-btn">Upload</button>
+            <button class="profile-btn">My Profile</button>
             <a href="/logout">Log out</a>
         {% else %}
             You are not logged in.
