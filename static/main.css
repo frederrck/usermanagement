@@ -1,8 +1,74 @@
-body
-{
-    background-color: #9D96B8;
-    text-align: center;  
-}
+/* new page css */
+
+body{
+    background-color: #4fd9b8;
+  }
+  
+  nav {
+      background-color: black;
+      color: white;
+      padding: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      margin-right: 6%;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+  
+    .navbar-logo img {
+      height: 40px;
+      width: auto;
+      margin-right: 8px;
+    }
+    
+    .search-bar {
+      flex-grow: 1;
+      text-align: center;
+    }
+    
+    .search-bar input[type="text"] {
+      width: 70%;
+      padding:5px;
+      margin-right:1%;
+      border-radius: 10px;
+      border: none;
+    }
+    
+    .search-bar button[type="submit"] {
+      padding: 5px 10px;
+      background-color: #434178;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .right-menu {
+      display: flex;
+      align-items: center;
+    }
+    
+    .right-menu button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      background-color: #4fd9b8;
+      border: none;
+      color: black;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
 
 /* TABLE CSS */
