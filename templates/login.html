@@ -1,0 +1,23 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<h1 class="home_head">LOGIN FORM</h1>
+
+
+<button><a href='/'> HOME </a></button><br><br>
+
+
+<form method='POST'>
+    <label for="email">Email: </label><br />
+    <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
+
+    <label for="password">Create a password: </label><br />
+    <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
+
+    <input type="submit" value="Complete Log In" />
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,113 @@
+body
+{
+    background-color: #9D96B8;
+    text-align: center;  
+}
+
+
+/* TABLE CSS */
+table, th, td {
+    border:1px solid black;
+}
+
+th { 
+    background-color: #9A7197; 
+    color: #AFD2E9;   
+}
+/* 
+td { 
+    background-color: aliceblue;
+} */
+
+th,td {
+    padding: 5px 6px;   
+}
+
+table{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 2%;
+}
+
+tr:nth-child(even) {
+    background-color: #AFD2E9;
+    color:black;     
+}
+
+tr:nth-child(odd) {
+    background-color: #c496c1;
+    color:white;     
+}
+
+.row_image {
+    height:70px;
+}
+
+
+/* FORM CSS */
+
+label{
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover{
+    transform: 1.01;
+    transition-duration: 2s;
+}
+
+/* Home page */
+
+.home_head{ 
+    background-color:#9A7197;
+    color:#AFD2E9;
+    padding: 2%;
+}
+
+.head_button{
+    margin-top:2%;
+}
+
+
+/* layout page */
+nav {
+    background-color: #7C5869;
+    color:#AFD2E9;
+    margin:-10px;
+    padding: 8px;
+    text-align: end;
+}
+nav a {
+    display: inline-block;
+    margin: 10px;
+    padding: 8px 12px;
+    color: white;
+    background-color: #9D96B8;
+    text-decoration: none;
+    border-radius: 2px;
+    transition-property: background-color, transform;
+    transition-duration: 300ms;
+}
+nav a:hover {
+    background-color:#AE97A1;
+    color:white;;
+    transform: scale(1.05);
+}
+
+
+.message { 
+    background-color: red;
+    margin-bottom: 0;
+    padding: 1.5%;
+}
+
+
+img[alt=profile] {
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;  /* Makes width and height the same */
+    object-fit: cover;    /* Crops instead of squashing */
+}

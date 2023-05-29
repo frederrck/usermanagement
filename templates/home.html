@@ -1,0 +1,69 @@
+{% extends "_layout.html" %}
+
+
+{% block content %}
+
+<h1 class="home_head">USER PAGE</h1>
+
+{% if not session["logged_in"] %}
+<button class = "head_button"><a href='/signup'> Sign Up </a></button>
+<button class = "head_button"><a href='/login'> Log In </a></button>
+{% elif session['role'] == "admin" %}
+<!-- No Button -->
+<button class = "head_button"><a href='/signup'> Add user </a></button>
+{% endif %}
+
+<!-- Table Header -->
+<table>
+    <tr> 
+        {% if session['role'] == "admin" %}
+        <th>Role</th>
+        {% endif %}
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th colspan='3'>Actions</th>
+    </tr>
+
+
+<!-- Table Content -->
+{% for row in result %}
+    <tr class="datarow">
+        
+        {% if session['role'] == "admin" %}
+            <td>
+                {% if row['role'] == 'admin' %}
+                    Admin
+                    {% if session['role'] == 'admin' and session['id'] != row['id'] %}
+                        <a href="/admin?id={{ row['id'] }}&role=user">toggle</a>
+                    {% endif %}
+                {% else %}
+                    User
+                    {% if session['role'] == 'admin' %}
+                        <a href="/admin?id={{ row['id'] }}&role=admin">toggle</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+        {% endif %}
+        <!-- <td><img src = "{{ row["image"]}}" alt = "profile" class = "row_image"></td> -->
+        <td>{{ row["first_name"] }}</td>
+        <td>{{ row["last_name"] }}</td>
+        <!-- <td><a href = "mailto: {{ row["email"] }}">{{ row["email"] }}</a></td> -->
+        <!-- Actions -->
+        <td>
+            <a href = "/delete?id= {{ row["id"] }}" onclick = "return confirm('Confirm delete')">Delete</a>
+        </td>
+        <td>
+            <a href = "/update?id= {{ row["id"] }}">Edit</a>    
+        </td>
+        <td>
+            <a href = "/view?id= {{ row["id"] }}">View</a>    
+        </td>
+    </tr>
+{% endfor %}
+
+</table>
+
+
+
+
+{% endblock %}
