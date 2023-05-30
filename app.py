@@ -65,14 +65,26 @@ def view_user():
 def post():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            sql = "SELECT * FROM users WHERE id = %s"
-
+            sql = "SELECT * FROM posts WHERE id = %s"
             values = (
                 request.args['id']
             )
             cursor.execute(sql, values)
             result = cursor.fetchone()
-    return "Here is the post" + result["content"]
+    return render_template("post.html", result=result)
+
+@app.route("/post/add", methods = ["GET", "POST"])
+def add_post():
+    if request.method == "POST":
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = "INSERT INTO posts (content) VALUES (%s)"
+                values = (request.form['content'])
+                cursor.execute(sql, values)
+                connection.commit()
+        return render_template("post_add.html") 
+    else:
+        return render_template("post_add.html")  
 
 # Login Page
 @app.route("/login", methods = ['GET', 'POST'])
