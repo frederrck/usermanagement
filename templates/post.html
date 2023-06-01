@@ -2,6 +2,10 @@
 
 {% block content %}
 
-<p> {{ result["content"]}} </p>
-
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <p class="card-text">{{ result["content"]}}</p>
+      <a href="#" class="btn btn-primary">{{result["first_name"]}}</a>
+    </div>
+  </div>
 {% endblock %}

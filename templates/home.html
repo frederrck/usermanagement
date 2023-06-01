@@ -3,8 +3,6 @@
 
 {% block content %}
 
-<h1 class="home_head">USER PAGE</h1>
-
 {% if not session["logged_in"] %}
 <button class = "head_button"><a href='/signup'> Sign Up </a></button>
 <button class = "head_button"><a href='/login'> Log In </a></button>

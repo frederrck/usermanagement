@@ -65,8 +65,10 @@ def view_user():
 def post():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            sql = "SELECT * FROM posts WHERE id = %s"
-            values = (
+            sql = """SELECT * FROM posts 
+                    JOIN users ON posts.user_id = users.id 
+                    WHERE posts.id = %s"""
+            values = (  
                 request.args['id']
             )
             cursor.execute(sql, values)
