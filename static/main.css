@@ -102,4 +102,5 @@ img[alt=profile] {
 }
 .right-menu{
     justify-content: right;
+    width:100px;
 }
