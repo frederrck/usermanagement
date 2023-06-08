@@ -1,12 +1,12 @@
 /* new page css */
 
 body{
-    background-color: #4fd9b8;
+    background-color: #434178;
   }
   
 /* nav */
 .navbar-logo img{
-    height: 33px;
+    height: 37px;
 }
 
 /* TABLE CSS */
@@ -96,11 +96,44 @@ img[alt=profile] {
 
 
 /* layout page nav */
+.container {
+    display: flex;
+    align-items: center;
+    width: 67%;
+    height:300px;
+    color:#4fd9b8;
+    background-color: #9A7197;
+    min-width: 500px;
+    background-image: url("/static/images/concert.webp");
+    background-size:     cover;                      
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
 
-.right-menu button{
-    margin-left: 1%;
+.head-text{ 
+    margin-left: 10%;
+    width: 100%;
 }
+
+
+
 .right-menu{
+    display: flex;
+    align-items: center;
+    
     justify-content: right;
-    width:100px;
+    background-color: #4fd9b8;
+    padding:13px;
 }
+
+/* divider */
+
+
+.b-example-divider {
+    width: 100%;
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  }
