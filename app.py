@@ -60,6 +60,11 @@ def view_user():
             result = cursor.fetchone()
     return render_template("view.html", result=result)
 
+# View Page
+@app.route("/viewprofile")
+def view_profile():
+    return render_template("viewprofile.html")
+
 # /post?id=1
 @app.route("/post")
 def post():
