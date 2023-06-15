@@ -1,35 +1,32 @@
 {% extends "_layout.html" %}
 
 {% block content %}
+<body style="background-color: white;">
+    <div class="sign-container">
+        <form method='POST' enctype="multipart/form-data">
+        <!-- Personal -->
+        <label for="first_name">First Name: </label><br />
+        <input type="text" id="first_name" name="first_name" required /><br />
 
-<h1 class="home_head">SIGN UP FORM</h1>
+        <label for="last_name">Last Name: </label><br />
+        <input type="text" id="last_name" name="last_name" required /><br />
 
+        <label for="email">Email: </label><br />
+        <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
 
-<button><a href='/'> HOME </a></button><br><br>
+        <label for="password">Create a password: </label><br />
+        <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
 
-<form method='POST' enctype="multipart/form-data">
-    <!-- Personal -->
-    <label for="first_name">First Name: </label><br />
-    <input type="text" id="first_name" name="first_name" required /><br />
+        <label for="dateofbirth">Date of Birth: </label><br />
+        <input type="date" id="dateofbirth" name="dateofbirth" required /><br /><br>
 
-    <label for="last_name">Last Name: </label><br />
-    <input type="text" id="last_name" name="last_name" required /><br />
+        <label for="image">Profile Picture </label><br />
+        <input type="file" id="profilepicture" name="image"/><br /><br>
 
-    <label for="email">Email: </label><br />
-    <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
-
-    <label for="password">Create a password: </label><br />
-    <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
-
-    <label for="dateofbirth">Date of Birth: </label><br />
-    <input type="date" id="dateofbirth" name="dateofbirth" required /><br /><br>
-
-    <label for="image">Profile Picture </label><br />
-    <input type="file" id="profilepicture" name="image"/><br /><br>
-
-    <input type="submit" value="Complete Sign up"/>
-</form>
-
+        <input type="submit" value="Complete Sign up"/>
+        </form>
+    </div>
+</body>
 
 
 {% endblock %}

@@ -1,23 +1,19 @@
 {% extends "_layout.html" %}
 
 {% block content %}
+<body style="background-color: white;">
 
-<h1 class="home_head">LOGIN FORM</h1>
+<div class = "sign-container">
+    <form method='POST'>
+        <label for="email">Email: </label><br />
+        <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
 
+        <label for="password">Create a password: </label><br />
+        <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
 
-<button><a href='/'> HOME </a></button><br><br>
-
-
-<form method='POST'>
-    <label for="email">Email: </label><br />
-    <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
-
-    <label for="password">Create a password: </label><br />
-    <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
-
-    <input type="submit" value="Complete Log In" />
-</form>
-
-
+        <input type="submit" value="Complete Log In" />
+    </form>
+</div>
+</body>
 
 {% endblock %}

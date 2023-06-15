@@ -63,7 +63,16 @@ def view_user():
 # View Page
 @app.route("/viewprofile")
 def view_profile():
-    return render_template("viewprofile.html")
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = "SELECT * FROM users WHERE id = %s"
+
+            values = (
+                session["id"]
+            )
+            cursor.execute(sql, values)
+            result = cursor.fetchone()
+    return render_template("viewprofile.html", result=result)
 
 # /post?id=1
 @app.route("/post")
@@ -74,7 +83,7 @@ def post():
                     JOIN users ON posts.user_id = users.id 
                     WHERE posts.id = %s"""
             values = (  
-                request.args['id']
+                request.args['id'] #change this to be for all users
             )
             cursor.execute(sql, values)
             result = cursor.fetchone()
@@ -85,8 +94,8 @@ def add_post():
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                sql = "INSERT INTO posts (content) VALUES (%s)"
-                values = (request.form['content'])
+                sql = "INSERT INTO posts (content, user_id) VALUES (%s, %s)"
+                values = (request.form['content'],session["id"])
                 cursor.execute(sql, values)
                 connection.commit()
         return render_template("post_add.html") 

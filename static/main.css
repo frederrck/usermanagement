@@ -1,5 +1,3 @@
-/* new page css */
-
 body{
     background-color: #434178;
   }
@@ -7,6 +5,13 @@ body{
 /* nav */
 .navbar-logo img{
     height: 37px;
+}
+
+.navbar {
+    background-color: white;
+    min-width: 500px;
+    width:67%;
+    margin: auto;
 }
 
 /* TABLE CSS */
@@ -96,7 +101,7 @@ img[alt=profile] {
 
 
 /* layout page nav */
-.container {
+.home-head {
     display: flex;
     align-items: center;
     width: 67%;
@@ -116,15 +121,35 @@ img[alt=profile] {
 }
 
 
-
+/* right-menu in navbar */
 .right-menu{
-    display: flex;
-    align-items: center;
-    
-    justify-content: right;
-    background-color: #4fd9b8;
     padding:13px;
 }
+
+.right-menu button {
+    border-radius: 10px;
+    margin-left:15px;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:4px;
+    padding-bottom:4px;
+    border-color: transparent;
+    background-color:#434178;
+    transition: 0.7s;
+    font-size: 17px;
+}
+
+.right-menu button:hover{
+    box-shadow: 5px 5px #4fd9b8;
+}
+
+.right-menu button a{
+    color: white;
+}
+
+
+
 
 /* divider */
 
@@ -137,3 +162,26 @@ img[alt=profile] {
     border-width: 1px 0;
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
   }
+
+
+
+/* post page */
+.post-feed{
+    display: flex;
+    align-items: center;
+    background-color: #4fd9b8;
+    width:67%;
+}
+
+/* login */
+
+.sign-container{
+    background-color:  #4fd9b8;
+    width: 40%;
+    border-radius: 15px;
+    padding:64px;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top:6%;
+    min-width: 400px;
+}

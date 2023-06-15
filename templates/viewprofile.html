@@ -1,0 +1,37 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+
+<h1 class="home_head">{{ result["first_name"] }} {{ result["last_name"] }} details</h1>
+
+<table>
+    <tr> 
+        <th>Profile Picture</th>
+        <th colspan="2">Name (First + Last Name)</th>
+        <th>Email</th>
+        <th colspan='3'>Actions</th>
+    </tr>
+
+    <tr class="datarow">
+        <td><img src = "{{ result["image"] or 'static/images/dftpfp.png' }}" alt = "profile" class = "row_image"></td>
+        <td>{{ result["first_name"] }}</td>
+        <td>{{ result["last_name"] }}</td>
+        <td><a href = "mailto: {{ result["email"] }}">{{ result["email"] }}</a></td>
+        <!-- Actions -->
+        <td>
+            <a href = "/update?id= {{ result["id"] }}">Edit</a>    
+        </td>
+        <td>
+            <a href = "/">Back</a>    
+        </td>
+    </tr>
+    <tr>
+        
+    </tr>
+
+
+
+</table>
+
+{% endblock %}

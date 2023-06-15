@@ -1,11 +1,10 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <p class="card-text">{{ result["content"]}}</p>
-      <a href="#" class="btn btn-primary">{{result["first_name"]}}</a>
-    </div>
+<div class="post-feed">
+  <div class="container">
+    {{ result["first_name"]}} {{ result["last_name"] }}
+    {{ result["content"]|safe}}
   </div>
+</div>
 {% endblock %}
