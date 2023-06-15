@@ -2,11 +2,17 @@
 
 {% block content %}
 
-<form method = "post">
-    <textarea id="editor" name="content"></textarea>
-    <button type="submit">Submit</button>
-</form>
 
+<div class="container">
+    <div class = "addpost">
+        <form method = "post" enctype="multipart/form-data">
+        <textarea id="editor" name="content"></textarea><br>
+        <label for="audio">Attach Audio Here:</label><br />
+        <input type="file" id="audio" name="audio"/><br /><br>
+        <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
 <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
 <script>ClassicEditor.create(document.querySelector('#editor'));</script>
 {% endblock %}

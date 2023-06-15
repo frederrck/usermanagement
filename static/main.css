@@ -149,8 +149,6 @@ img[alt=profile] {
 }
 
 
-
-
 /* divider */
 
 
@@ -185,3 +183,16 @@ img[alt=profile] {
     margin-top:6%;
     min-width: 400px;
 }
+
+/*** ADD POST PAGE ***/
+
+.addpost{
+    width: 50%;
+    margin: auto;
+    margin-top:5%;
+
+}
+    .addpost form{
+        height: 300px;
+        color: white;
+    }

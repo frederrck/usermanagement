@@ -10,12 +10,12 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        host="10.0.0.17",
-        user="fremu",
-        # host="localhost",
-        # user="root",
-        password="ARENA",
-        db="fremu_test",
+        # host="10.0.0.17",
+        # user="fremu",
+        host="127.0.0.1",
+        user="root",
+        password="^@^Xqmddd1967psExocet_17_19ps",
+        db="user_management",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -94,8 +94,18 @@ def add_post():
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                sql = "INSERT INTO posts (content, user_id) VALUES (%s, %s)"
-                values = (request.form['content'],session["id"])
+
+                audio = request.files["audio"]
+                if audio:
+                    # Choose a random filename to prevent clashes
+                    ext = os.path.splitext(audio.filename)[1]
+                    audio_path = "static/audio/" + str(uuid.uuid4())[:8] + ext
+                    audio.save(audio_path)
+                else:
+                    audio_path = None
+
+                sql = "INSERT INTO posts (content, audio, user_id) VALUES (%s, %s, %s)"
+                values = (request.form['content'], audio_path, session["id"])
                 cursor.execute(sql, values)
                 connection.commit()
         return render_template("post_add.html") 
