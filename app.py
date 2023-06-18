@@ -14,7 +14,7 @@ def create_connection():
         user="fremu",
         # host="127.0.0.1",
         # user="root",
-        # password="",
+        password="ARENA",
         db="fremu_test",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor

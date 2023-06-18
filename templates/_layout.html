@@ -20,7 +20,10 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 {% if session["logged_in"] %}
                 <div class="navbar-nav">
-                  <a class="nav-link active" aria-current="page" href="/post">Explore</a>
+                  <a class="nav-link active" aria-current="page" href="/post">Feed</a>
+                </div>
+                <div class="navbar-nav">
+                  <a class="nav-link active" aria-current="page" href="/post">Library</a>
                 </div>
                 {% else %}
 
@@ -28,9 +31,8 @@
             </div>
             <div class="right-menu">
                 {% if session["logged_in"] %}
-                Welcome, {{ session["first_name"] }} ({{session["role"]}})
                 <button class="upload-btn"><a href="/post/add">Upload</a></button>
-                <button class="profile-btn"><a href="/viewprofile" onclick="closeButton()">My Profile</a></button>
+                <button class="profile-btn"><a href="/viewprofile">My Profile</a></button>
                 <button><a href="/logout">Logout</a></button>
                 {% else %}
                 <div class="right-button">
@@ -67,11 +69,6 @@
                 x.type = "password";
             }
         }
-    </script>
-    <script>
-      function closeButton() {
-        document.getElementsByClassName("profile-btn").style.display = "none";
-      }
     </script>
   
     

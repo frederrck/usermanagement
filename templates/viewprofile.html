@@ -2,9 +2,7 @@
 
 {% block content %}
 
-
-<h1 class="home_head">{{ result["first_name"] }} {{ result["last_name"] }} details</h1>
-
+<h1> 
 <table>
     <tr> 
         <th>Profile Picture</th>
@@ -21,9 +19,6 @@
         <!-- Actions -->
         <td>
             <a href = "/update?id= {{ result["id"] }}">Edit</a>    
-        </td>
-        <td>
-            <a href = "/">Back</a>    
         </td>
     </tr>
     <tr>

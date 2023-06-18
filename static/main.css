@@ -20,6 +20,12 @@ body{
     margin: auto;
 }
 
+.navbar-nav{
+    font-weight:300;
+    font-size:20px;
+    margin-left:10px;
+}
+
 /* TABLE CSS */
 table, th, td {
     border:1px solid black;
@@ -230,10 +236,24 @@ img[alt=profile] {
 }
     .addpost form{
         height: 300px;
-        color: white;
     }
 
+    .addpost button{
+        border-radius: 10px;
+        text-decoration: none;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top:4px;
+        padding-bottom:4px;
+        border-color: transparent;
+        background-color:#434178;
+        font-size: 17px;
+        color:white;
+    }
 
+    .addpost label{
+        font-weight: 600;
+    }
 
 /* other */
     /* divider */
@@ -245,4 +265,3 @@ img[alt=profile] {
         border-width: 1px 0;
         box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
     }
-
