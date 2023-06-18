@@ -18,6 +18,9 @@
         <label for="email">Email: </label><br />
         <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
 
+        <label for="username">Enter a display name: </label><br />
+        <input type="username" id="username" name="username" required/><br />
+
         <label for="password">Create a password: </label><br />
         <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
 
@@ -27,43 +30,11 @@
         <label for="image">Profile Picture </label><br />
         <input type="file" id="profilepicture" name="image"/><br /><br>
 
-        <input type="submit" value="Complete Sign up"/>
+        
+        <input type="submit" class="submitform" value="Complete Sign up"/>
         </form>
     </div>
 </body>
 
 
 {% endblock %}
-
-
-{# {% for arg in request.args %}
-
-{{ arg }} : {{ request.args[arg]}}
-<br />
-
-{% endfor %} #}
-
-        {# <!-- Multiple Selection -->
-        <label>What is your Ethnicity? </label><br />
-
-        <input type="checkbox" id="asian" name="ethnicity" value="Asian">
-        <label for="asian">Asian</label><br>
-
-        <input type="checkbox" id="african" name="ethnicity" value="African">
-        <label for="african">African</label><br>
-
-        <input type="checkbox" id="european" name="ethnicity" value="European">
-        <label for="european">European</label><br />
-
-        <input type="checkbox" id="maori" name="ethnicity" value="Maori">
-        <label for="maori">Maori</label><br />
-
-        <input type="checkbox" id="pasifika" name="ethnicity" value="Pasifika">
-        <label for="pasifika">Pasifika</label><br /><br /> #}
-
-        
-        {# <label>Feedback rating</label><br />
-        <input name="rating" type="range" min="0" max="5" /><br /><br />
-
-        <textarea name="message" rows="10" cols="30">THANK YOUR FOR YOUR INPUT!
-        </textarea><br /><br /> #}

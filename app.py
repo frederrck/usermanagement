@@ -10,12 +10,12 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        # host="10.0.0.17",
-        # user="fremu",
-        host="127.0.0.1",
-        user="root",
-        password="^@^Xqmddd1967psExocet_17_19ps",
-        db="user_management",
+        host="10.0.0.17",
+        user="fremu",
+        # host="127.0.0.1",
+        # user="root",
+        # password="",
+        db="fremu_test",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
