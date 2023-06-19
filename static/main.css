@@ -255,6 +255,17 @@ img[alt=profile] {
         font-weight: 600;
     }
 
+
+
+/* view profile */
+.viewprofile th{
+    background-color:#434178;
+    color:white;
+    font-size: larger;
+    font-weight:300;
+}
+
+
 /* other */
     /* divider */
     .b-example-divider {

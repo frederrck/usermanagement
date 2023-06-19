@@ -76,7 +76,7 @@ def view_profile():
 
 # /post?id=1
 @app.route("/feed")
-def post():
+def feed():
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = """SELECT * FROM posts 
@@ -119,10 +119,11 @@ def login():
         with create_connection() as connection:
             with connection.cursor() as cursor: 
                 sql = """SELECT * FROM users 
-                WHERE email = %s AND password = %s"""
+                WHERE email = %s or username = %s AND password = %s"""
 
                 values = (
                     request.form["email"],
+                    request.form["username"],
                     encrypt(request.form["password"])
                 )
 
