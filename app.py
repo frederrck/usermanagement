@@ -75,7 +75,7 @@ def view_profile():
     return render_template("viewprofile.html", result=result)
 
 # /post?id=1
-@app.route("/post")
+@app.route("/feed")
 def post():
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -87,7 +87,7 @@ def post():
             )
             cursor.execute(sql, values)
             result = cursor.fetchone()
-    return render_template("post.html", result=result)
+    return render_template("feed.html", result=result)
 
 @app.route("/post/add", methods = ["GET", "POST"])
 def add_post():
