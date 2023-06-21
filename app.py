@@ -10,12 +10,12 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        host="10.0.0.17",
-        user="fremu",
-        # host="127.0.0.1",
-        # user="root",
-        password="ARENA",
-        db="fremu_test",
+        # host="10.0.0.17",
+        # user="fremu",
+        host="127.0.0.1",
+        user="root",
+        password=".magnesiumOxide123",
+        db="user_management",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -158,7 +158,6 @@ def signup():
         with create_connection() as connection:
             with connection.cursor() as cursor: 
 
-
                 image = request.files["image"]
                 if image:
                     # Choose a random filename to prevent clashes
@@ -169,12 +168,13 @@ def signup():
                     image_path = None
 
                 sql = """INSERT INTO users
-                    (first_name, last_name, email, password, dateofbirth, image)
-                    VALUES (%s, %s, %s, %s, %s, %s)"""
+                    (first_name, last_name, email, username, password, dateofbirth, image)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 values = (
                     request.form["first_name"],
                     request.form["last_name"],
                     request.form["email"],
+                    request.form["username"],
                     encrypt(request.form["password"]),
                     request.form["dateofbirth"], 
                     image_path 

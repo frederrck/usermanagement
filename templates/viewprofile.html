@@ -1,8 +1,44 @@
 {% extends "_layout.html" %}
 
 {% block content %}
+<body style="background-color: #434178;">
 
-<div class="viewprofile">
+<div class="color-head"></div>
+<div class="view-profile"> 
+    <img src = "{{ result["image"] or '/static/images/dftpfp.png' }}" alt = "profile">
+</div>
+
+<h2 style="text-align: center; color:white;margin-bottom:20px;">{{ result["first_name"]}} {{ result["last_name"]}}</h2>
+
+<div class="profile-info">
+    <div class="row profile-text">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+            <h3>Basic Information</h3>
+            <div class="basic-info border">
+                <div class="info-fields"> 
+                    <h4>Full Name</h4> 
+                    <h4>Username</h4>
+                    <h4>Date of Birth</h4>
+                    <h4>Password</h4><p type="password"><input type="checkbox" onclick="myFunction()"> Show Password</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Contact Information</h3>
+            <div class="basic-info border">
+                <div class="info-fields"> 
+                    <h4>Email</h4> 
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+
+<!-- <div class="viewprofile">
     <table>
         <tr> 
             <th>Profile Picture</th>
@@ -19,15 +55,22 @@
             <td>{{ result["last_name"] }}</td>
             <td>{{ result["username"] }}</td>
             <td><a href = "mailto: {{ result["email"] }}">{{ result["email"] }}</a></td>
-            <!-- Actions -->
             <td>
                 <a href = "/update?id= {{ result["id"] }}">Edit</a>    
             </td>
         </tr>
     </table>
 <div>
-
+<div class="view-profile">
+    <div class="row">
+        <div class="col-md-4">
+            <img src = "{{ result["image"] or 'static/images/dftpfp.png' }}" alt = "profile" class = "row_image">
+        </div>
+    </div>
+</div>
 <audio controls>
-    <source src="{{ result["audio_path"]}}"
-</audio>
+    <source src="{{ result["audio_path"]}}">
+</audio> -->
+
+</body>
 {% endblock %}
