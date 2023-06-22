@@ -10,12 +10,12 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        # host="10.0.0.17",
-        # user="fremu",
-        host="127.0.0.1",
-        user="root",
-        password=".magnesiumOxide123",
-        db="user_management",
+        host="10.0.0.17",
+        user="fremu",
+        # host="127.0.0.1",
+        # user="root",
+        password="ARENA",
+        db="fremu_test",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -80,13 +80,13 @@ def feed():
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = """SELECT * FROM posts 
-                    JOIN users ON posts.user_id = users.id 
-                    WHERE posts.id = %s"""
-            values = (  
-                request.args['id'] #change this to be for all users
-            )
-            cursor.execute(sql, values)
-            result = cursor.fetchone()
+                    LEFT JOIN users ON posts.user_id = users.id 
+                """
+            # values = (  
+            #     request.args['id'] #change this to be for all users
+            # )
+            cursor.execute(sql)
+            result = cursor.fetchall()
     return render_template("feed.html", result=result)
 
 @app.route("/post/add", methods = ["GET", "POST"])

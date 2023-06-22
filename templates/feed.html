@@ -3,8 +3,15 @@
 {% block content %}
 <div class="post-feed">
   <div class="container">
-    {{ result["first_name"]}} {{ result["last_name"] }}
-    {{ result["content"] }}
+    {% for row in result %}
+    <hr>
+    <a href="/view"><img class="feed-pfp" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+    <a href="/view">{{ row["first_name"]}} {{ row["last_name"] }}</a>
+    {{ row["content"]|safe }}
+    <audio controls>
+      <source src="{{ row["audio"]}}">
+    </audio>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

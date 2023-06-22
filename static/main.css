@@ -289,7 +289,7 @@ img[alt=profile] {
 }
 
 .color-head{
-    background-color: #4fd9b8;
+    background-color: white;
     height: 220px;
     margin-top: -80px;
 }
@@ -305,6 +305,17 @@ img[alt=profile] {
         color:white;
         margin-top: 20px;
     }
+
+/* Post Feed */
+
+.post-feed{
+    margin:auto;
+}
+
+.feed-pfp{
+    height:30px;
+    border-radius: 50%;
+}
 
 /* other */
 
