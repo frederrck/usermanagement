@@ -1,17 +1,17 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-<div class="post-feed">
-  <div class="container">
     {% for row in result %}
-    <hr>
-    <a href="/view"><img class="feed-pfp" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-    <a href="/view">{{ row["first_name"]}} {{ row["last_name"] }}</a>
-    {{ row["content"]|safe }}
-    <audio controls>
-      <source src="{{ row["audio"]}}">
-    </audio>
+    <div class="ind_post">
+      <a href="/view"><img class="rounded-circle" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+      <a href="/view" class="post-user">{{ row["username"]}}</a><br>
+      {{row["genre"]}}
+      <div class="post-content">{{ row["content"]|safe }}</div>
+    
+      <audio controls>
+        <source src="{{ row["audio"] or 'None'}}">
+      </audio>
+    </div>
     {% endfor %}
-  </div>
-</div>
+
 {% endblock %}

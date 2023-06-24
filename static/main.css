@@ -186,15 +186,6 @@ img[alt=profile] {
 }
 
 
-
-/* post page */
-.post-feed{
-    display: flex;
-    align-items: center;
-    background-color: #4fd9b8;
-    width:67%;
-}
-
 /* sign-up and login */
 
 .sign-container{
@@ -274,7 +265,7 @@ img[alt=profile] {
 
 .profile-text{
     text-align: center;
-    color:white;
+    color:#434178;
 }
 
     .profile-text h3{
@@ -288,6 +279,14 @@ img[alt=profile] {
     border-color: white;
 }
 
+
+    .basic-info p{
+        background-color:white;
+        width:fit-content;
+        padding:10px;
+        barg
+    }
+
 .color-head{
     background-color: white;
     height: 220px;
@@ -298,24 +297,54 @@ img[alt=profile] {
     width:80%;
     margin: auto;
     text-align: left;
+    font-weight: 300;
 }
 
     .info-fields{
         margin-left: 30px;
-        color:white;
+        color:#434178;
         margin-top: 20px;
     }
 
 /* Post Feed */
 
-.post-feed{
-    margin:auto;
+.rounded-circle{
+    height:40px;
 }
 
-.feed-pfp{
-    height:30px;
-    border-radius: 50%;
+
+    .post{
+        width: 100%;
+    }
+
+    .post-user{
+        font-size: 30px;
+        color:#AFD2E9;
+    }
+    .post-content{
+        font-size: 18px;
+        margin-left:10px;
+    }
+
+
+/* new ind feed */
+.ind_post{
+    width:50%;
+    min-width: 500px;
+    margin:auto;
+    background-color:#434178;
+    margin-top: 20px;
+    color:white;
+    padding:20px;
 }
+
+
+.ind_post audio{
+    margin: 20px;
+    width:80%;
+    min-width: 400px;
+}
+
 
 /* other */
 
@@ -329,4 +358,5 @@ img[alt=profile] {
         border-width: 1px 0;
         box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
     }
+
 

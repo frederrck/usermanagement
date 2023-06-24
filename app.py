@@ -10,12 +10,12 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        host="10.0.0.17",
-        user="fremu",
-        # host="127.0.0.1",
-        # user="root",
-        password="ARENA",
-        db="fremu_test",
+        # host="10.0.0.17",
+        # user="fremu",
+        host="127.0.0.1",
+        user="root",
+        password=".magnesiumOxide123",
+        db="user_management",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -45,19 +45,19 @@ def home():
 # View Page
 @app.route("/view")
 def view_user():
-    if not can_access(request.args["id"]):
-        flash("You don't have permission to do that")
-        return redirect('/')
+    # if not can_access(request.args["id"]):
+    #     flash("You don't have permission to do that")
+    #     return redirect('/')
         
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = "SELECT * FROM users WHERE id = %s"
 
             values = (
-                request.args['id']
+                request.args['post.user_id']
             )
             cursor.execute(sql, values)
-            result = cursor.fetchone()
+            result = cursor.fetchall()
     return render_template("view.html", result=result)
 
 # View Page
@@ -82,9 +82,6 @@ def feed():
             sql = """SELECT * FROM posts 
                     LEFT JOIN users ON posts.user_id = users.id 
                 """
-            # values = (  
-            #     request.args['id'] #change this to be for all users
-            # )
             cursor.execute(sql)
             result = cursor.fetchall()
     return render_template("feed.html", result=result)
@@ -104,8 +101,8 @@ def add_post():
                 else:
                     audio_path = None
 
-                sql = "INSERT INTO posts (content, audio, user_id) VALUES (%s, %s, %s)"
-                values = (request.form['content'], audio_path, session["id"])
+                sql = "INSERT INTO posts (content, audio, genre, user_id) VALUES (%s, %s, %s, %s)"
+                values = (request.form['content'], audio_path, request.form["genre"],session["id"])
                 cursor.execute(sql, values)
                 connection.commit()
         return render_template("post_add.html") 

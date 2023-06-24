@@ -18,10 +18,10 @@
             <h3>Basic Information</h3>
             <div class="basic-info border">
                 <div class="info-fields"> 
-                    <h4>Full Name</h4> 
-                    <h4>Username</h4>
-                    <h4>Date of Birth</h4>
-                    <h4>Password</h4><p type="password"><input type="checkbox" onclick="myFunction()"> Show Password</p>
+                    <h4>Full Name</h4><p>{{ result["first_name"]}} {{ result["last_name"]}}</p>
+                    <h4>Username</h4><p>{{ result["username"] }}</p>
+                    <h4>Date of Birth</h4><p>{{result["dateofbirth"]}}</p> 
+                    <h4>Change Password</h4>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
             <h3>Contact Information</h3>
             <div class="basic-info border">
                 <div class="info-fields"> 
-                    <h4>Email</h4> 
+                    <h4>Email</h4><p>{{result["email"]}}</p>
                 </div>
             </div>
         </div>
