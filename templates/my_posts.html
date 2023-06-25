@@ -3,7 +3,7 @@
 {% block content %}
     {% for row in result %}
         <div class="ind_post">
-          <a href="/view?id={{ row["user_id"]}}"><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+          <a href="/view?id={{ row["user_id"]}}"><img class="rounded-circle" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
           <a href="/view?id={{ row["user_id"]}}"" class="post-user">{{ row["username"]}}</a><br>
           {{row["genre"]}}
           <div class="post-content">{{ row["content"]|safe }}</div>

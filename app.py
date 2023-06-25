@@ -10,12 +10,12 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        # host="10.0.0.17",
-        # user="fremu",
-        host="127.0.0.1",
-        user="root",
-        password=".magnesiumOxide123",
-        db="user_management",
+        host="10.0.0.17",
+        user="fremu",
+        # host="127.0.0.1",
+        # user="root",
+        password="ARENA",
+        db="fremu_test",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -45,7 +45,6 @@ def home():
 # View Page
 @app.route("/view")
 def view_user():
-        
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = "SELECT * FROM users WHERE id = %s"
@@ -54,7 +53,7 @@ def view_user():
                 request.args['id']
             )
             cursor.execute(sql, values)
-            result = cursor.fetchall()
+            result = cursor.fetchone()
     return render_template("view.html", result=result)
 
 # View Page
@@ -71,7 +70,6 @@ def view_profile():
             result = cursor.fetchone()
     return render_template("viewprofile.html", result=result)
 
-# /post?id=1
 @app.route("/feed")
 def feed():
     with create_connection() as connection:
@@ -82,6 +80,24 @@ def feed():
             cursor.execute(sql)
             result = cursor.fetchall()
     return render_template("feed.html", result=result)
+
+# /post?id=1
+# view individual post
+@app.route("/my_posts")
+def my_posts():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """SELECT * FROM posts 
+                    LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
+                """
+            
+            values = {
+                session["id"]
+            }
+
+            cursor.execute(sql, values)
+            result = cursor.fetchone()
+    return render_template("my_posts.html", result=result)
 
 @app.route("/post/add", methods = ["GET", "POST"])
 def add_post():

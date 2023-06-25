@@ -38,20 +38,6 @@
     </div>
 </div>
 
-<!-- Try to make view own posts-->
-
-{% for row in result %}
-<div class="ind_post">
-  <a href="/view"><img class="rounded-circle" src ="{{ session["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-  <a href="/view" class="post-user">{{ session["username"]}}</a><br>
-  {{session["genre"]}}
-  <div class="post-content">{{ result["content"]|safe }}</div>
-
-  <audio controls>
-    <source src="{{ session["audio"] or 'None'}}">
-  </audio>
-</div>
-{% endfor %}
 
 </body>
 {% endblock %}

@@ -346,6 +346,12 @@ img[alt=profile] {
     min-width: 400px;
 }
 
+.post-img{
+    height:40px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius:50%;
+}
 
 /* other */
 
