@@ -8,7 +8,7 @@
     <img src = "{{ result["image"] or '/static/images/dftpfp.png' }}" alt = "profile">
 </div>
 
-<h2 style="text-align: center; color:white;margin-bottom:20px;">{{ result["first_name"]}} {{ result["last_name"]}}</h2>
+<h2 style="text-align: center; color:#434178;margin-bottom:20px;">{{ result["first_name"]}} {{ result["last_name"]}}</h2>
 
 <div class="profile-info">
     <div class="row profile-text">
@@ -38,39 +38,20 @@
     </div>
 </div>
 
-<!-- <div class="viewprofile">
-    <table>
-        <tr> 
-            <th>Profile Picture</th>
-            <th>First Name</th>
-            <th>Surname</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th colspan='3'>Actions</th>
-        </tr>
+<!-- Try to make view own posts-->
 
-        <tr class="datarow">
-            <td><img src = "{{ result["image"] or 'static/images/dftpfp.png' }}" alt = "profile" class = "row_image"></td>
-            <td>{{ result["first_name"] }}</td>
-            <td>{{ result["last_name"] }}</td>
-            <td>{{ result["username"] }}</td>
-            <td><a href = "mailto: {{ result["email"] }}">{{ result["email"] }}</a></td>
-            <td>
-                <a href = "/update?id= {{ result["id"] }}">Edit</a>    
-            </td>
-        </tr>
-    </table>
-<div>
-<div class="view-profile">
-    <div class="row">
-        <div class="col-md-4">
-            <img src = "{{ result["image"] or 'static/images/dftpfp.png' }}" alt = "profile" class = "row_image">
-        </div>
-    </div>
+{% for row in result %}
+<div class="ind_post">
+  <a href="/view"><img class="rounded-circle" src ="{{ session["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+  <a href="/view" class="post-user">{{ session["username"]}}</a><br>
+  {{session["genre"]}}
+  <div class="post-content">{{ result["content"]|safe }}</div>
+
+  <audio controls>
+    <source src="{{ session["audio"] or 'None'}}">
+  </audio>
 </div>
-<audio controls>
-    <source src="{{ result["audio_path"]}}">
-</audio> -->
+{% endfor %}
 
 </body>
 {% endblock %}

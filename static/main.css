@@ -284,7 +284,6 @@ img[alt=profile] {
         background-color:white;
         width:fit-content;
         padding:10px;
-        barg
     }
 
 .color-head{
@@ -336,6 +335,8 @@ img[alt=profile] {
     margin-top: 20px;
     color:white;
     padding:20px;
+    box-shadow: 0 0 10px black;
+    border-radius: 5px;
 }
 
 

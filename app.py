@@ -45,16 +45,13 @@ def home():
 # View Page
 @app.route("/view")
 def view_user():
-    # if not can_access(request.args["id"]):
-    #     flash("You don't have permission to do that")
-    #     return redirect('/')
         
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = "SELECT * FROM users WHERE id = %s"
 
             values = (
-                request.args['post.user_id']
+                request.args['id']
             )
             cursor.execute(sql, values)
             result = cursor.fetchall()
@@ -286,6 +283,15 @@ def toggle_admin():
         flash("You don't have permission to do that!")
     return redirect("/")   
 
+#like and dislike
+# def add_like():
+#     with create_connection() as connection:
+#         with connection.cursor() as cursor:
+#             if "liked" in 
+
+
+
+
 # Check Email
 def email_exists(email):
     with create_connection() as connection:
@@ -295,6 +301,8 @@ def email_exists(email):
             cursor.execute(sql, values)
             result = cursor.fetchone()
     return result is not None
+
+
 
 
 app.run(debug = True)
