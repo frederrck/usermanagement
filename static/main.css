@@ -305,6 +305,13 @@ img[alt=profile] {
         margin-top: 20px;
     }
 
+.updatebtn {
+    border-radius: 4px;
+    color:white;
+    background-color: #434178;
+    margin:auto;
+}
+
 /* Post Feed */
 
 .rounded-circle{
@@ -352,6 +359,9 @@ img[alt=profile] {
     object-fit: cover;
     border-radius:50%;
 }
+
+
+
 
 /* other */
 

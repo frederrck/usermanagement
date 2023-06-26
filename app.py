@@ -96,7 +96,7 @@ def my_posts():
             }
 
             cursor.execute(sql, values)
-            result = cursor.fetchone()
+            result = cursor.fetchall()
     return render_template("my_posts.html", result=result)
 
 @app.route("/post/add", methods = ["GET", "POST"])
@@ -196,13 +196,12 @@ def signup():
         return render_template("signup.html")
 
 
-# TODO: UPDATE 
 #/update?id=1
 @app.route("/update", methods = ["GET", "POST"])
 def update(): 
-    if not can_access(request.args["id"]):
-        flash("You don't have permission to do that")
-        return redirect('/')
+    # if not can_access(request.args["id"]):
+    #     flash("You don't have permission to do that")
+    #     return redirect('/')
 
     if request.method == "POST":
         with create_connection() as connection:
@@ -250,7 +249,7 @@ def update():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 sql = "SELECT * FROM users where id = %s"
-                values = (request.args["id"])
+                values = (session["id"])
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
         return render_template("update.html", result=result)

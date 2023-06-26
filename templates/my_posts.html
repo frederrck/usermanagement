@@ -3,8 +3,8 @@
 {% block content %}
     {% for row in result %}
         <div class="ind_post">
-          <a href="/view?id={{ row["user_id"]}}"><img class="rounded-circle" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-          <a href="/view?id={{ row["user_id"]}}"" class="post-user">{{ row["username"]}}</a><br>
+          <a><img class="rounded-circle" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+          <a class="post-user">{{ row["username"]}}</a><br>
           {{row["genre"]}}
           <div class="post-content">{{ row["content"]|safe }}</div>
           
@@ -14,6 +14,7 @@
           <div>
             <i class="fa-regular fa-thumbs-up"></i>
           </div>
+          <button><a href="/delete?id={{ row["user_id"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
         </div>
     {% endfor %}
 
