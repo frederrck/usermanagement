@@ -5,6 +5,8 @@ import os
 from flask import Flask, render_template, request, redirect, session, flash
 app = Flask(__name__)
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 
@@ -199,9 +201,9 @@ def signup():
 #/update?id=1
 @app.route("/update", methods = ["GET", "POST"])
 def update(): 
-    # if not can_access(request.args["id"]):
-    #     flash("You don't have permission to do that")
-    #     return redirect('/')
+    if not can_access(request.args["id"]):
+        flash("You don't have permission to do that")
+        return redirect('/')
 
     if request.method == "POST":
         with create_connection() as connection:
@@ -228,6 +230,7 @@ def update():
                     first_name = %s,
                     last_name = %s,
                     email = %s,
+                    username = %s,
                     password = %s,
                     dateofbirth = %s,
                     image = %s
@@ -237,6 +240,7 @@ def update():
                     request.form['first_name'],
                     request.form['last_name'],
                     request.form['email'],
+                    request.form['username'],
                     encrypted_password,
                     request.form['dateofbirth'],
                     image_path,
@@ -267,12 +271,13 @@ def delete():
     with create_connection() as connection:
             with connection.cursor() as cursor: 
                 # Get the image path before deleting the user
-                sql = "SELECT image FROM users WHERE id = %s"
+                sql = """SELECT * FROM posts 
+                    LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s"""
                 values = (request.args["id"])
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
-                if result["image"]:
-                    os.remove(result["image"])
+                if result["audio"]:
+                    os.remove(result["audio"])
 
                 sql = "DELETE FROM users WHERE id = %s"
                 values = (request.args["id"])

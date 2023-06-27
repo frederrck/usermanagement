@@ -5,7 +5,7 @@
         <div class="ind_post">
           <a><img class="rounded-circle" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
           <a class="post-user">{{ row["username"]}}</a><br>
-          {{row["genre"]}}
+          genre : {{row["genre"]}}
           <div class="post-content">{{ row["content"]|safe }}</div>
           
           <audio controls>
