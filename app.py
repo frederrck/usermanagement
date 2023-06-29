@@ -226,6 +226,7 @@ def update():
                 else:
                     image_path = request.form["old_image"]
 
+
                 sql = """UPDATE users SET 
                     first_name = %s,
                     last_name = %s,
@@ -279,7 +280,7 @@ def delete():
                 if result["audio"]:
                     os.remove(result["audio"])
 
-                sql = "DELETE FROM users WHERE id = %s"
+                sql = "DELETE FROM posts WHERE post.id = %s"
                 values = (request.args["id"])
                 cursor.execute(sql, values)
                 connection.commit()
