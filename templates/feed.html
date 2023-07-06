@@ -1,18 +1,28 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-    {% for row in result %}
+    {% for row in result|reverse %}
         <div class="ind_post">
-          <a href="/view?id={{ row["user_id"]}}"><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-          <a href="/view?id={{ row["user_id"]}}"" class="post-user">{{ row["username"]}}</a><br>
-          {{row["genre"]}}
-          <div class="post-content">{{ row["content"]|safe }}</div>
-          
-          <audio controls>
-            <source src="{{ row["audio"] or 'None'}}">
-          </audio>
-          <div>
-            <i class="fa-regular fa-thumbs-up"></i>
+          <div class="row">
+            <div class="col-sm-6 left-post">
+              <a href="/view?id={{ row["user_id"]}}"><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+              <a href="/view?id={{ row["user_id"]}}"" class="post-user">{{ row["username"]}}</a><br>
+              genre : {{row["genre"]}}
+              <div class="post-content">{{ row["content"]|safe }}</div>
+              
+              <audio controls>
+                <source src="{{ row["audio"] or 'None'}}">
+              </audio>
+              <form action="/feed/like?post_id={{row["post_id"]}}" method="POST">
+                <button type="submit">Like</button>
+              </form>
+              {{row["likes_count"]}}
+            </div>
+            <div class = "col-md-6 album-cvr">
+              <div class = "postimg-container">
+                <img class="right-image" src="{{ row["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+              </div>
+            </div>
           </div>
         </div>
     {% endfor %}

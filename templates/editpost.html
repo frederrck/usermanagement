@@ -1,0 +1,52 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+<div class="ind_post">
+    <div class = "row">
+      <div class = "col-md-6 left-post">
+        <!-- Usable hidden fields -->
+        <input name="id" value ="{{ session['id']}}" type = "hidden">
+        <input name="post_id" value ="{{ result['post_id']}}" type = "hidden">
+
+        <a><img class="post-img" src ="{{ result["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+        <a class="post-user">{{ result["username"]}}</a><br>
+        genre : {{result["genre"]}}
+        <div class="post-content">{{ result["content"]|safe }}</div>
+        
+        <audio controls>
+          <source name="audio" value = "{{ result["audio"]}}" src="{{ result["audio"]}}">
+        </audio>
+        <div>
+          <i class="fa-regular fa-thumbs-up"></i>
+        </div>
+      
+        <button class="delbtn"><a href="/delete?id={{ result["post_id"]}}&audio={{ result["audio"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
+
+        <button class="updatebtn"><a href="/my_posts/edit?id={{ result["post_id"]}}&audio={{ result["audio"]}}" >Edit Post</a></button>
+      </div>
+      <div class = "col-md-6 album-cvr">
+        <div class = "postimg-container">
+          <img class="right-image" src="{{ result["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <form method='POST' enctype="multipart/form-data">
+        <h1>Edit Post</h1><br>
+        <input name="id" value ="{{ result['id']}}" type = "hidden">
+        <input name="old_image" type="hidden" value = "{{ result['image'] or 'None'}}">
+
+        <!-- Personal -->
+        <label for="content">Edit Description: </label><br />
+        <input type="text" id="content" name="content" value="{{ request.args['content']}}" required /><br />
+
+        <label for="image">Change Profile Picture </label><br />
+        <input type="file" id="image" name="image"/><br /><br>
+
+        <input class="editpostform" type="submit" value="Complete Edits"/>
+    </form>
+
+
+
+{% endblock %}
