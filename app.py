@@ -59,7 +59,17 @@ def view_user():
             )
             cursor.execute(sql, values)
             result = cursor.fetchone()
-    return render_template("view.html", result=result)
+
+            sql = """SELECT * FROM posts 
+                    LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
+                """
+            
+            values = {
+                request.args["id"]
+            }
+            cursor.execute(sql, values)
+            result2 = cursor.fetchall() 
+    return render_template("view.html", result=result, result2=result2)
 
 # View Page
 @app.route("/viewprofile")
@@ -73,7 +83,17 @@ def view_profile():
             )
             cursor.execute(sql, values)
             result = cursor.fetchone()
-    return render_template("viewprofile.html", result=result)
+
+            sql = """SELECT * FROM posts 
+                    LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
+                """
+            
+            values = {
+                session["id"]
+            }
+            cursor.execute(sql, values)
+            result2 = cursor.fetchall() 
+    return render_template("viewprofile.html", result2 = result2, result = result)
 
 @app.route("/feed")
 def feed():
@@ -90,21 +110,21 @@ def feed():
 
 # /post?id=1
 # view individual post
-@app.route("/my_posts")
-def my_posts():
-    with create_connection() as connection:
-        with connection.cursor() as cursor:
-            sql = """SELECT * FROM posts 
-                    LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
-                """
+# @app.route("/my_posts")
+# def my_posts():
+#     with create_connection() as connection:
+#         with connection.cursor() as cursor:
+#             sql = """SELECT * FROM posts 
+#                     LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
+#                 """
             
-            values = {
-                session["id"]
-            }
+#             values = {
+#                 session["id"]
+#             }
 
-            cursor.execute(sql, values)
-            result = cursor.fetchall()    
-    return render_template("my_posts.html", result=result)
+#             cursor.execute(sql, values)
+#             result = cursor.fetchall()    
+#     return render_template("my_posts.html", result=result)
 
 @app.route("/post/add", methods = ["GET", "POST"])
 def add_post():
@@ -116,7 +136,7 @@ def add_post():
                 if audio:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(audio.filename)[1]
-                    audio_path = "static/audio/" + str(uuid.uuid4())[:8] + ext
+                    audio_path = "/static/audio/" + str(uuid.uuid4())[:8] + ext
                     audio.save(audio_path)
                 else:
                     audio_path = None
@@ -125,7 +145,7 @@ def add_post():
                 if image:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                 else:
                     image_path = None
@@ -162,7 +182,7 @@ def login():
             session["id"] = result["id"]
             session["first_name"] = result["first_name"]
             session["role"] = result["role"]
-            return redirect("/")
+            return redirect("/feed")
         else:
             flash("Incorrect Email or Password")
             redirect('/login')
@@ -190,7 +210,7 @@ def signup():
                 if image:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                 else:
                     image_path = None
@@ -235,7 +255,7 @@ def update():
 
                 if image:
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                     if request.form["old_image"]:
                         os.remove(request.form["old_image"])
@@ -265,7 +285,7 @@ def update():
                 )
                 cursor.execute(sql, values)
                 connection.commit()
-        return redirect("/")
+        return redirect("/viewprofile")
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -306,7 +326,7 @@ def delete():
             cursor.execute(sql, values)
             connection.commit()
             flash("Post has been deleted","success")
-    return redirect("/my_posts")
+    return redirect("/viewprofile")
 
 
 # Update Own Posts. 
@@ -316,15 +336,16 @@ def updatepost():
     #     flash("You don't have permission to do that")
     #     return redirect('/')
 
+    
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
 
-                image = request.files["image"]
+                image = request.files["cvrimage"]
 
                 if image:
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                     if request.form["old_image"]:
                         os.remove(request.form["old_image"])
@@ -333,18 +354,17 @@ def updatepost():
 
 
                 sql = """UPDATE posts SET 
-                    content = %s,
-                    cover_img = %s,
-                    WHERE id = %s
-                """
+                        content = %s,
+                        
+                        WHERE post_id = %s
+                    """
                 values = (
-                    request.form[''],
-                    request.form['last_name'],
-                    request.form['id']
+                    request.form['content'],
+                    request.args['id']
                 )
                 cursor.execute(sql, values)
                 connection.commit()
-        return redirect("/")
+        return redirect("/my_posts/edit?id=" + request.args["id"] )
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -352,7 +372,13 @@ def updatepost():
                 values = (session["id"])
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
-        return render_template("editpost.html", result=result)
+
+                sql = """SELECT * FROM posts 
+                    LEFT JOIN users ON posts.user_id = users.id WHERE post_id = %s
+                """
+                cursor.execute(sql, request.args["id"])
+                result2 = cursor.fetchone()
+        return render_template("editpost.html", result=result, result2 = result2)
 
 # /admin?id=1&role=admin
 @app.route("/admin")
@@ -441,6 +467,16 @@ def like_post():
 
     return redirect('/feed')
 
+@app.route("/view_post")
+def viewpost():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """SELECT * FROM posts 
+                    LEFT JOIN users ON posts.user_id = users.id WHERE post_id = %s
+                """
+            cursor.execute(sql, request.args["id"])
+            result = cursor.fetchone()
+    return render_template("view_post.html", result=result)
 
 # Check Email
 def email_exists(email):
@@ -453,6 +489,8 @@ def email_exists(email):
     return result is not None
 
 
-
+@app.route("/audiotemplate")
+def audioplayer():
+    return render_template("audiotemplate.html")
 
 app.run(debug = True)
