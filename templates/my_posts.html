@@ -2,8 +2,8 @@
 
 {% block content %}
     {% for row in result|reverse %}
-        <div class="ind_post">
-          <div class = "row">
+        <div class="ind_post small-post">
+          <div class = "row ">
             <div class = "col-md-6 left-post">
               <!-- Usable hidden fields -->
               <input name="id" value ="{{ session['id']}}" type = "hidden">
@@ -11,19 +11,19 @@
 
               <a><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
               <a class="post-user">{{ row["username"]}}</a><br>
-              genre : {{row["genre"]}}
-              <div class="post-content">{{ row["content"]|safe }}</div>
-              
-              <audio controls>
+
+              <audio controls class="post-audio">
                 <source name="audio" value = "{{ row["audio"]}}" src="{{ row["audio"]}}">
               </audio>
-              <div>
-                <i class="fa-regular fa-thumbs-up"></i>
-              </div>
-            
-              <button class="delbtn"><a href="/delete?id={{ row["post_id"]}}&audio={{ row["audio"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
 
-              <button class="updatebtn"><a href="/my_posts/edit?id={{ row["post_id"]}}&audio={{ row["audio"]}}" >Edit Post</a></button>
+              <div class="post-content">{{ row["content"]|safe }}</div>
+              <div class="post-genre">Genre : {{row["genre"]}}</div>
+
+              <div class="mypost-btn">
+                <button class="delbtn"><a href="/delete?id={{ row["post_id"]}}&audio={{ row["audio"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
+                <button class="updatebtn"><a href="/my_posts/edit?id={{ row["post_id"]}}&audio={{ row["audio"]}}" >Edit Post</a></button>
+                <button><a href="/view_post?id={{result["post_id"]}}">View Post</a></button>
+              </div>  
             </div>
             <div class = "col-md-6 album-cvr">
               <div class = "postimg-container">

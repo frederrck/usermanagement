@@ -13,35 +13,34 @@
     <!-- Navigation Bar-->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-        <div class="navbar-logo"><a href="/"><img src="/static/images/b_logo.png" alt="Logo"></a></div>
+          {% if session["logged_in"] %}
+          <div class="navbar-logo">
+            <a href="/feed"><img src="/static/images/b_logo.png" alt="Logo"></a>
+          </div>
+          <a class="navbar-brand" href="/feed">BeatBulletin</a>
+          {% else %}
+          <div class="navbar-logo">
+            <a href="/"><img src="/static/images/b_logo.png" alt="Logo"></a>
+          </div>
           <a class="navbar-brand" href="/">BeatBulletin</a>
+          {% endif %}
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                {% if session["logged_in"] %}
-                <div class="navbar-nav">
-                  <a class="nav-link active" aria-current="page" href="/feed" onclick=navFull()>Feed</a>
-                </div>
-                <div class="navbar-nav">
-                  <a class="nav-link active" aria-current="page" href="/my_posts">My Posts</a>
-                </div>
-                {% else %}
-
-                {% endif %}
-            </div>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="right-menu">
-                {% if session["logged_in"] %}
-                <button class="upload-btn"><a href="/post/add">Upload</a></button>
-                <button class="profile-btn"><a href="/viewprofile">My Profile</a></button>
-                <button><a href="/logout">Logout</a></button>
-                {% else %}
-                <div class="right-button">
-                    <button><a href="/login">Login</a></button>
-                    <button><a href="/signup">Sign Up</a></button>
-                </div>
-                {% endif %}
+              {% if session["logged_in"] %}
+              <button class="upload-btn"><a href="/post/add">Upload</a></button>
+              <button class="profile-btn"><a href="/viewprofile">My Profile</a></button>
+              <button><a href="/logout">Logout</a></button>
+              {% else %}
+              <div class="right-button">
+                <button><a href="/login">Login</a></button>
+                <button><a href="/signup">Sign Up</a></button>
+              </div>
+              {% endif %}
             </div>
+          </div>
         </div>
       </nav>
 

@@ -1,0 +1,46 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+        <div class="ind_post">
+          <div class = "row">
+            <div class = "col-md-6 left-post">
+              <!-- Usable hidden fields -->
+              <input name="id" value ="{{ session['id']}}" type = "hidden">
+              <input name="post_id" value ="{{ result['post_id']}}" type = "hidden">
+              <input name="user_id" value ="{{ result['user_id']}}" type = "hidden">
+
+              <a><img class="post-img" src ="{{ result["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+              <a class="post-user">{{ result["username"]}}</a><br>
+
+              <audio controls class="post-audio">
+                <source name="audio" value = "{{ result["audio"]}}" src="{{ result["audio"]}}">
+              </audio>
+
+              <div class="post-content">{{ result["content"]|safe }}</div>
+              <div class="post-genre">Genre : {{result["genre"]}}</div>
+
+              {% if result['user_id'] == session["id"] %}
+              <div class="mypost-btn">
+                <button class="delbtn"><a href="/delete?id={{ result["post_id"]}}&audio={{ result["audio"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
+                <button class="updatebtn"><a href="/my_posts/edit?id={{ result["post_id"]}}" >Edit Post</a></button>
+                <button><a href="/view_post?id={{ result["post_id"]}}">View Post</a></button>
+                <button><a href="/feed">Back</a></button>
+              </div>  
+              {% else %}
+                <button><a href="/feed">Back</a></button>
+              {% endif %}
+
+            
+            </div>
+            
+
+            <div class = "col-md-6 album-cvr">
+              <div class = "postimg-container">
+                <img class="right-image" src="{{ result["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+{% endblock %}

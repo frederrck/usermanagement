@@ -1,22 +1,34 @@
 {% extends "_layout.html" %}
 
 {% block content %}
+    <div class="page-head">
+      <p>Your Feed</p>
+    </div>
     {% for row in result|reverse %}
         <div class="ind_post">
           <div class="row">
             <div class="col-sm-6 left-post">
               <a href="/view?id={{ row["user_id"]}}"><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
               <a href="/view?id={{ row["user_id"]}}"" class="post-user">{{ row["username"]}}</a><br>
-              genre : {{row["genre"]}}
-              <div class="post-content">{{ row["content"]|safe }}</div>
               
-              <audio controls>
+              <audio controls class = "post-audio">
                 <source src="{{ row["audio"] or 'None'}}">
               </audio>
-              <form action="/feed/like?post_id={{row["post_id"]}}" method="POST">
-                <button type="submit">Like</button>
-              </form>
-              {{row["likes_count"]}}
+              <div class="post-content">{{ row["content"]|safe }}</div>
+              <div class="post-genre">Genre : {{row["genre"]}}</div>
+              
+              <div class = "post-buttons">
+                <form action="/feed/like?post_id={{row["post_id"]}}" method="POST">
+                  <button type="submit">Like</button>
+                </form>
+                {{row["likes_count"]}}
+                <form action="" method="POST">
+                  <button type="submit">Dislike</button>
+                </form>
+              </div>
+              <div class="mypost-btn" style>
+                <button><a href="/view_post?id={{ row["post_id"]}}">View Post</a></button>
+              </div>
             </div>
             <div class = "col-md-6 album-cvr">
               <div class = "postimg-container">

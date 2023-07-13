@@ -32,7 +32,10 @@
         <label for="image">Change Profile Picture </label><br />
         <input type="file" id="image" name="image"/><br /><br>
 
-        <input class="submitform" type="submit" value="Complete Update"/>
+
+        <a href="/my_posts/edit?id={{result2["post_id"]}}">
+            <input class="submitform" type="submit" value="Complete Update"/>
+        </a>
     </form>
 </div>
 
@@ -40,35 +43,3 @@
 
 {% endblock %}
 
-
-{# {% for arg in request.args %}
-
-{{ arg }} : {{ request.args[arg]}}
-<br />
-
-{% endfor %} #}
-
-        {# <!-- Multiple Selection -->
-        <label>What is your Ethnicity? </label><br />
-
-        <input type="checkbox" id="asian" name="ethnicity" value="Asian">
-        <label for="asian">Asian</label><br>
-
-        <input type="checkbox" id="african" name="ethnicity" value="African">
-        <label for="african">African</label><br>
-
-        <input type="checkbox" id="european" name="ethnicity" value="European">
-        <label for="european">European</label><br />
-
-        <input type="checkbox" id="maori" name="ethnicity" value="Maori">
-        <label for="maori">Maori</label><br />
-
-        <input type="checkbox" id="pasifika" name="ethnicity" value="Pasifika">
-        <label for="pasifika">Pasifika</label><br /><br /> #}
-
-        
-        {# <label>Feedback rating</label><br />
-        <input name="rating" type="range" min="0" max="5" /><br /><br />
-
-        <textarea name="message" rows="10" cols="30">THANK YOUR FOR YOUR INPUT!
-        </textarea><br /><br /> #}

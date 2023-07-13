@@ -41,4 +41,43 @@
 <button class="updatebtn"><a href="/update?id={{ result["id"]}}">Update Profile</a></button>
 
 </body>
+
+<div class="page-head">
+    <p> Your Posts </p>
+</div>
+
+{% for row in result2|reverse %}
+<div class="ind_post">
+  <div class = "row ">
+    <div class = "col-md-6 left-post">
+      <!-- Usable hidden fields -->
+      <input name="id" value ="{{ session['id']}}" type = "hidden">
+      <input name="post_id" value ="{{ row['post_id']}}" type = "hidden">
+
+      <a><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+      <a class="post-user">{{ row["username"]}}</a><br>
+
+      <audio controls class="post-audio">
+        <source name="audio" value = "{{ row["audio"]}}" src="{{ row["audio"]}}">
+      </audio>
+
+      <div class="post-content">{{ row["content"]|safe }}</div>
+      <div class="post-genre">Genre : {{row["genre"]}}</div>
+
+      <div class="mypost-btn">
+        <button class="delbtn"><a href="/delete?id={{ row["post_id"]}}&audio={{ row["audio"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
+        <button class="updatebtn"><a href="/my_posts/edit?id={{ row["post_id"]}}" >Edit Post</a></button>
+        <button><a href="/view_post?id={{ row["post_id"]}}">View Post</a></button>
+      </div>  
+    </div>
+    <div class = "col-md-6 album-cvr">
+      <div class = "postimg-container">
+        <img class="right-image" src="{{ row["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+
 {% endblock %}
