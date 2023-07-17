@@ -33,7 +33,8 @@
     <form method='POST' enctype="multipart/form-data">
         <h1>Edit Post</h1><br>
         <input name="post_id" value ="{{ result['post_id']}}" type = "hidden">
-        <input name="old_image" type="hidden" value = "{{ result['image'] or 'None'}}">
+        <input name="old_image" type="hidden" value = "{{ result['cover_img'] or 'None'}}">
+        <input name="old_content" type="hidden" value="{{result["content"]}}">
 
         <!-- Personal -->
         <label for="content">Edit Description: </label><br />

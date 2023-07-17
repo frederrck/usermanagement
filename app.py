@@ -2,7 +2,6 @@ import pymysql
 import hashlib
 import uuid
 import os
-import time
 from jinja2 import Environment
 from flask import Flask, render_template, request, redirect, session, flash
 app = Flask(__name__)
@@ -136,7 +135,7 @@ def add_post():
                 if audio:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(audio.filename)[1]
-                    audio_path = "/static/audio/" + str(uuid.uuid4())[:8] + ext
+                    audio_path = "static/audio/" + str(uuid.uuid4())[:8] + ext
                     audio.save(audio_path)
                 else:
                     audio_path = None
@@ -145,7 +144,7 @@ def add_post():
                 if image:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                 else:
                     image_path = None
@@ -167,7 +166,7 @@ def login():
         with create_connection() as connection:
             with connection.cursor() as cursor: 
                 sql = """SELECT * FROM users 
-                WHERE email = %s or username = %s AND password = %s"""
+                         WHERE (email = %s OR username = %s) AND password = %s"""
 
                 values = (
                     request.form["email"],
@@ -210,7 +209,7 @@ def signup():
                 if image:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                 else:
                     image_path = None
@@ -325,7 +324,7 @@ def delete():
             values = (request.args["id"])
             cursor.execute(sql, values)
             connection.commit()
-            flash("Post has been deleted","success")
+            flash("Post has been deleted successfully", "success")
     return redirect("/viewprofile")
 
 
@@ -345,23 +344,37 @@ def updatepost():
 
                 if image:
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
+
                     if request.form["old_image"]:
-                        os.remove(request.form["old_image"])
+                        if os.path.exists(request.form["old_image"]):
+                            os.remove(request.form["old_image"])
+                        else:
+                            # Handle the case when the file doesn't exist
+                            flash("Previous image file not found")
                 else:
                     image_path = request.form["old_image"]
 
-
                 sql = """UPDATE posts SET 
                         content = %s,
-                        
+                        cover_img = %s
                         WHERE post_id = %s
                     """
-                values = (
-                    request.form['content'],
-                    request.args['id']
-                )
+                
+                if not request.form['content']:
+                    values = (
+                        request.form["old_content"],
+                        image_path,
+                        request.args['id']
+                    )
+                else:
+                    values = (
+                        request.form['content'],
+                        image_path,
+                        request.args['id']
+                    )
+
                 cursor.execute(sql, values)
                 connection.commit()
         return redirect("/my_posts/edit?id=" + request.args["id"] )
@@ -426,44 +439,61 @@ def add_like(user_id, post_id):
         connection.close()
 
 # updating likes count 
-def update_likes(post_id):
+def update_likes(post_id2):
     connection = create_connection()
 
     try:
         with connection.cursor() as cursor:
             likes_sql = "SELECT COUNT(*) FROM likes WHERE post_id = %s"
-            cursor.execute(likes_sql, (post_id,))
+            cursor.execute(likes_sql, (post_id2,))
             result = cursor.fetchone()
 
-            if result is not None and len(result) > 0:
-                count = result[0]
+            if result is not None and 'COUNT(*)' in result:
+                count = result['COUNT(*)']
             else:
                 count = 0
 
             update_sql = "UPDATE posts SET likes_count = %s WHERE post_id = %s"
-            cursor.execute(update_sql, (count, post_id))
+            cursor.execute(update_sql, (count, post_id2))
 
         connection.commit()
-    # except:
-    #     pass
     finally:
         connection.close()
 
+def remove_like(user_id, post_id):
+    connection = create_connection()
+
+    try:
+        with connection.cursor() as cursor:
+            sql = "DELETE FROM likes WHERE user_id = %s AND post_id = %s"
+            cursor.execute(sql, (user_id, post_id))
+
+        connection.commit()
+    finally:
+        connection.close()
 
 
 # post likes and dislikes
 @app.route("/feed/like", methods=["POST"])
 def like_post():
     user_id = session["id"]
-    post_id = request.args["post_id"] 
+    post_id = request.form["post_id"] 
+    post_id2 = post_id
 
-    if user_liked(user_id, post_id):
-        flash("Already Liked")
-        return redirect("/feed")
-    
-    add_like(user_id, post_id)
 
-    update_likes(post_id)
+    if request.form["action"] == "like":
+        if user_liked(user_id, post_id):
+            flash("Already Liked")
+        else:
+            add_like(user_id, post_id)
+
+    elif request.form["action"] == "dislike":
+        if user_liked(user_id, post_id):
+            remove_like(user_id, post_id)
+        else:
+            flash("No like to dislike :)")
+
+    update_likes(post_id2)
 
     return redirect('/feed')
 

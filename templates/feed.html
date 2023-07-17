@@ -16,15 +16,20 @@
               </audio>
               <div class="post-content">{{ row["content"]|safe }}</div>
               <div class="post-genre">Genre : {{row["genre"]}}</div>
-              
+              {{request.args["post_id"]}}
               <div class = "post-buttons">
-                <form action="/feed/like?post_id={{row["post_id"]}}" method="POST">
-                  <button type="submit">Like</button>
+
+                <form action="/feed/like" method="POST">
+                  <input name="post_id" value ="{{ row['post_id']}}" type = "hidden"> 
+                  <button type="submit" name = "action" value="like">Like</button>
                 </form>
-                {{row["likes_count"]}}
-                <form action="" method="POST">
-                  <button type="submit">Dislike</button>
+
+                <form action="/feed/like" method="POST">
+                  <input name="post_id" value ="{{ row['post_id']}}" type = "hidden"> 
+                  <button type="submit" name = "action" value="dislike">Dislike</button>
                 </form>
+
+                Likes: {{ row["likes_count"]|default(0) }}
               </div>
               <div class="mypost-btn" style>
                 <button><a href="/view_post?id={{ row["post_id"]}}">View Post</a></button>
