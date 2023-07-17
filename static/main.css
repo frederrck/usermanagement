@@ -3,6 +3,22 @@ body{
     overflow-x:hidden;
   }
 
+/* footer */
+.footer{
+    background-color: white;
+    margin-top:30px;
+    padding:5%;
+}
+
+/* like */
+
+.like-active{
+    background-color: gray;
+ }
+ 
+ .like-inactive{
+     background-color: darkblue;
+ }
   
 /* nav */
 .navbar-logo img{
@@ -438,6 +454,14 @@ img[alt=profile] {
         font-size: 17px;
         color:#434178;
     }
+
+
+
+
+
+
+
+
 /* other */
 
 

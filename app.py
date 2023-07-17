@@ -14,12 +14,12 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        # host="10.0.0.17",
-        # user="fremu",
-        host="127.0.0.1",
-        user="root",
-        password=".magnesiumOxide123",
-        db="user_management",
+        host="10.0.0.17",
+        user="fremu",
+        # host="127.0.0.1",
+        # user="root",
+        password="ARENA",
+        db="fremu_test",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -433,12 +433,11 @@ def add_like(user_id, post_id):
         with connection.cursor() as cursor:
             sql = "INSERT INTO likes (user_id, post_id) VALUES (%s, %s)"
             cursor.execute(sql, (user_id, post_id))
-        
         connection.commit()
     finally:
         connection.close()
 
-# updating likes count 
+# updating likes count
 def update_likes(post_id2):
     connection = create_connection()
 
@@ -467,11 +466,12 @@ def remove_like(user_id, post_id):
         with connection.cursor() as cursor:
             sql = "DELETE FROM likes WHERE user_id = %s AND post_id = %s"
             cursor.execute(sql, (user_id, post_id))
-
         connection.commit()
     finally:
         connection.close()
 
+if 'liked_posts' not in session:
+    session['liked_posts'] = {}
 
 # post likes and dislikes
 @app.route("/feed/like", methods=["POST"])
@@ -480,20 +480,26 @@ def like_post():
     post_id = request.form["post_id"] 
     post_id2 = post_id
 
+    liked_posts = session.get('liked_posts', {})
+    post_liked = liked_posts.get(post_id, False)
 
     if request.form["action"] == "like":
-        if user_liked(user_id, post_id):
+        if post_liked:
             flash("Already Liked")
         else:
             add_like(user_id, post_id)
+            liked_posts[post_id] = True  # Update the liked status in the session.
 
     elif request.form["action"] == "dislike":
-        if user_liked(user_id, post_id):
+        if post_liked:
             remove_like(user_id, post_id)
+            liked_posts[post_id] = False  # Update the liked status in the session.
         else:
             flash("No like to dislike :)")
 
     update_likes(post_id2)
+
+    session['liked_posts'] = liked_posts
 
     return redirect('/feed')
 
