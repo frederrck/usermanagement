@@ -24,7 +24,7 @@
                 <button class="delbtn"><a href="/delete?id={{ result["post_id"]}}&audio={{ result["audio"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
                 <button class="updatebtn"><a href="/my_posts/edit?id={{ result["post_id"]}}" >Edit Post</a></button>
                 <button><a href="/view_post?id={{ result["post_id"]}}">View Post</a></button>
-                <button><a href="/feed">Back</a></button>
+                <button><a href="/viewprofile">Back</a></button>
               </div>  
               {% else %}
                 <button><a href="/feed">Back</a></button>

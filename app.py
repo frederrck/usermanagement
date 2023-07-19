@@ -142,9 +142,9 @@ def add_post():
 
                 image = request.files["cover_img"]
                 if image:
-                    # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    filename = str(uuid.uuid4())[:8] + ext
+                    image_path = os.path.join("static", "images", filename)
                     image.save(image_path)
                 else:
                     image_path = None
@@ -470,8 +470,6 @@ def remove_like(user_id, post_id):
     finally:
         connection.close()
 
-if 'liked_posts' not in session:
-    session['liked_posts'] = {}
 
 # post likes and dislikes
 @app.route("/feed/like", methods=["POST"])
@@ -480,27 +478,19 @@ def like_post():
     post_id = request.form["post_id"] 
     post_id2 = post_id
 
-    liked_posts = session.get('liked_posts', {})
-    post_liked = liked_posts.get(post_id, False)
-
     if request.form["action"] == "like":
-        if post_liked:
+        if user_liked(user_id, post_id):
             flash("Already Liked")
         else:
             add_like(user_id, post_id)
-            liked_posts[post_id] = True  # Update the liked status in the session.
 
     elif request.form["action"] == "dislike":
-        if post_liked:
+        if user_liked(user_id, post_id):
             remove_like(user_id, post_id)
-            liked_posts[post_id] = False  # Update the liked status in the session.
         else:
             flash("No like to dislike :)")
 
     update_likes(post_id2)
-
-    session['liked_posts'] = liked_posts
-
     return redirect('/feed')
 
 @app.route("/view_post")
