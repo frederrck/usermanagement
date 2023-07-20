@@ -7,32 +7,47 @@
 <body style="background-color: white;">
     <div class="sign-container">
         <h1>Sign-Up</h1><br>
-        <form method='POST' enctype="multipart/form-data">
-        <!-- Personal -->
-        <label for="first_name">First Name: </label><br />
-        <input type="text" id="first_name" name="first_name" required /><br />
+            <form method='POST' enctype="multipart/form-data">
+            <!-- Personal -->
+            <div class="row">
+                <div class = "col-md-5">
+                        <label class="form-label" for="first_name">First Name: </label><br />
+                        <input type="text" id="first_name" name="first_name" required /><br />
+                </div>
+                <div class = "col-md-2">
+                </div>  
+                <div class = "col-md-5">
+                        <label class="form-label" for="last_name">Last Name: </label><br />
+                        <input type="text" id="last_name" name="last_name" required /><br />
+                </div>
+            </div>
 
-        <label for="last_name">Last Name: </label><br />
-        <input type="text" id="last_name" name="last_name" required /><br />
+            <div class="row">
+                <div class = "col-md-5">
+                    <label class="form-label" for="email">Email: </label><br />
+                    <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
+                </div>
+                <div class = "col-md-2">
+                </div>  
+                <div class = "col-md-5">
+                    <label class="form-label" or="dateofbirth">Date of Birth: </label><br />
+                    <input type="date" id="dateofbirth" name="dateofbirth" required /><br></br>
+                </div>
+            </div>
 
-        <label for="email">Email: </label><br />
-        <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
 
-        <label for="username">Enter a display name: </label><br />
-        <input type="username" id="username" name="username" required/><br />
+                        <label class="form-label" for="username">Enter a display name: </label><br />
+                        <input type="username" id="username" name="username" required/><br />
 
-        <label for="password">Create a password: </label><br />
-        <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
+                        <label class="form-label" for="password">Create a password: </label><br />
+                        <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
 
-        <label for="dateofbirth">Date of Birth: </label><br />
-        <input type="date" id="dateofbirth" name="dateofbirth" required /><br /><br>
 
-        <label for="image">Profile Picture </label><br />
-        <input type="file" id="profilepicture" name="image"/><br /><br>
 
-        
+                        <label class="form-label" for="image">Profile Picture </label><br />
+                        <input type="file" id="profilepicture" name="image"/><br /><br>
+            </form>
         <input type="submit" class="submitform" value="Complete Sign up"/>
-        </form>
     </div>
 </body>
 
