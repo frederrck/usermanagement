@@ -21,13 +21,19 @@
 
               {% if result['user_id'] == session["id"] %}
               <div class="mypost-btn">
-                <button class="delbtn"><a href="/delete?id={{ result["post_id"]}}&audio={{ result["audio"]}}" onclick="return confirm('Are you sure?')">Delete Post</a></button>
-                <button class="updatebtn"><a href="/my_posts/edit?id={{ result["post_id"]}}" >Edit Post</a></button>
+                Likes: {{ result["likes_count"]|default(0) }}
+                <button class="delbtn"><a href="/delete?id={{ result["post_id"]}}&audio={{ result["audio"]}}" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a></button>
+                <button class="delbtn"><a href="/my_posts/edit?id={{ result["post_id"]}}" ><i class="fa-solid fa-pen-to-square"></i></a></button>
                 <button><a href="/view_post?id={{ result["post_id"]}}">View Post</a></button>
                 <button><a href="/viewprofile">Back</a></button>
+                
               </div>  
               {% else %}
+              <div class="mypost-btn">
+                Likes: {{ result["likes_count"]|default(0) }}
                 <button><a href="/feed">Back</a></button>
+                
+              </div>
               {% endif %}
 
             

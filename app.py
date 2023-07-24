@@ -209,7 +209,7 @@ def signup():
                 if image:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                 else:
                     image_path = None
@@ -311,7 +311,6 @@ def delete():
                 LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s"""
             values = (request.args["id"])
             cursor.execute(sql, values)
-            result = cursor.fetchone()
             if "audio" in request.args and request.args["audio"] is not None and request.args["audio"]:
                 audio_file = request.args["audio"]
                 if os.path.exists(audio_file):
@@ -319,6 +318,12 @@ def delete():
             else:
                 pass
             
+            if "image" in request.args and request.args["image"] is not None and request.args["image"]:
+                image_file = request.args["image"]
+                if os.path.exists(image_file):
+                    os.remove(image_file)
+            else:
+                pass
 
             sql = "DELETE FROM posts WHERE post_id = %s"
             values = (request.args["id"])

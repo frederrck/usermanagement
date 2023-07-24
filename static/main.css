@@ -494,7 +494,7 @@ img[alt=profile] {
     margin-left:10px;
 }
 
-    .post-buttons button, .mypost-btn button{ 
+    .post-buttons button, .mypost-btn button, .updatebtn{ 
         border-radius: 10px;
         text-decoration: none;
         padding-left: 10px;
@@ -507,6 +507,18 @@ img[alt=profile] {
         color:#434178;
     }
 
+    .updatebtn, .updatebtn a{ 
+        margin:auto;
+        color:black;
+        margin-top:20px;
+        font-size: 100px;
+        padding:10px;
+    }
+    
+    .joshbutton {
+        text-align: center;
+    }
+
 
 
 /* sign up and login forms */
@@ -516,8 +528,10 @@ img[alt=profile] {
     font-weight:400;
 }
 
-
-
+.sign-inputs input{
+    padding: 5px;
+    
+}
 
 /* other */
 

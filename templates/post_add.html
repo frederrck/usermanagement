@@ -1,7 +1,9 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-
+<div class="page-head">
+    <p>Upload Post</p>
+  </div>
 
 <div class="container">
     <div class = "addpost">
@@ -9,13 +11,13 @@
         <textarea id="editor" name="content"></textarea><br>
 
         <label for="audio">Attach Audio Here:</label><br />
-        <input type="file" id="audio" name="audio" required/><br /><br>
+        <input type="file" id="audio" name="audio" required accept="audio/*"/><br /><br>
 
         <label for="genre">Genre (e.g Rock, Hip Hop, etc.)</label><br />
         <input type="text" id="genre" name="genre" required/><br /><br>
 
         <label for="cover_img">Upload a cover image</label><br>
-        <input type="file" id="cover_img" name="cover_img"><br><br>
+        <input type="file" id="cover_img" name="cover_img" accept="image/*"><br><br>
 
         <button type="submit">Submit</button>
         </form>

@@ -16,24 +16,17 @@
               </audio>
               <div class="post-content">{{ row["content"]|safe }}</div>
               <div class="post-genre">Genre : {{row["genre"]}}</div>
-              {% if session["liked"] %}
-                adasdasd
-              {% else %}
-              {% endif %}
               <div class = "post-buttons">
 
                 <form action="/feed/like" method="POST">
                   <input name="post_id" value ="{{ row['post_id']}}" type = "hidden">   
                   {% if session["liked"] %}
-                  <button class="like-active" type="submit" name = "action" value="like">Like</button>
+                  <button class="like-active" type="submit" name = "action" ><i class="fa-solid fa-thumbs-up"></i></button>
                   {% else %}
-                  <button class="like-inactive" type="submit" name = "action" value="like">Like</button>
+                  <button class="like-inactive" type="submit" name = "action" value="like"><i class="fa-solid fa-thumbs-up"></i></button>
                   {% endif %}
-                </form>
-
-                <form action="/feed/like" method="POST">
                   <input name="post_id" value ="{{ row['post_id']}}" type = "hidden"> 
-                  <button type="submit" name = "action" value="dislike">Dislike</button>
+                  <button type="submit" name = "action" value="dislike"><i class="fa-solid fa-thumbs-down"></i></button>
                 </form>
 
                 Likes: {{ row["likes_count"]|default(0) }}

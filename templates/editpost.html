@@ -9,11 +9,11 @@
       <input name="post_id" value ="{{ result2['post_id']}}" type = "hidden">
       <input name="user_id" value ="{{ result2['user_id']}}" type = "hidden">
 
-      <a><img class="post-img" src ="{{ result2["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+      <a><img class="post-img" src ="'/' + {{ result2["image"] or 'static/images/dftpfp.png'}}" alt="profile-picture"></a>
       <a class="post-user">{{ result2["username"]}}</a><br>
 
       <audio controls class="post-audio">
-        <source name="audio" value = "{{ result2["audio"]}}" src="{{ result2["audio"]}}">
+        <source name="audio" value = "'/' + {{ result2["audio"]}}" src="{{ result2["audio"]}}">
       </audio>
 
       <div class="post-content">{{ result2["content"]|safe }}</div>
