@@ -498,6 +498,32 @@ def like_post():
     update_likes(post_id2)
     return redirect('/feed')
 
+#COMMENTS -------------------------------------------------------------------------------------------------------------------------------------------------
+def add_comment(user_id, post_id, comment):
+    connection = create_connection()
+    try:
+        with connection.cursor() as cursor:
+            sql = "INSERT INTO comments (user_id, post_id, comment) VALUES (%s, %s, %s)"
+            cursor.execute(sql, (user_id, post_id, comment))
+        connection.commit()
+    finally:
+        connection.close()
+
+@app.route("/view_comments")
+def view_comments(user_id, post_id, comment):
+    connection = create_connection()
+
+@app.route("/feed/comment")
+def comment():
+    user_id = session["id"]
+    post_id = request.args["post_id"] 
+    comment = request.args["comment"]
+
+    add_comment(user_id, post_id, comment)
+
+    return redirect('/feed')
+
+
 @app.route("/view_post")
 def viewpost():
     with create_connection() as connection:
