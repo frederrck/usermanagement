@@ -1,0 +1,88 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+    <div class="page-head">
+      <p>Your Feed</p>
+    </div>
+    {% for row in result|reverse %}
+        <div class="ind_post">
+          <div class="row">
+            <div class="col-sm-6 left-post">
+              <a href="/view?id={{ row["user_id"]}}"><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+              <a href="/view?id={{ row["user_id"]}}"" class="post-user">{{ row["username"]}}</a><br> 
+              
+              <audio controls class = "post-audio">
+                <source src="{{ row["audio"] or 'None'}}">
+              </audio>
+              <div class="post-content">{{ row["content"]|safe }}</div>
+              <div class="post-genre">Genre : {{row["genre"]}}</div>
+              <div class = "post-buttons">
+
+                <form action="/feed/like" method="POST">
+                  <input name="post_id" value ="{{ row['post_id']}}" type = "hidden">   
+                  {% if session["liked"] %}
+                  <button class="like-active" type="submit" name = "action" ><i class="fa-solid fa-thumbs-up"></i></button>
+                  {% else %}
+                  <button class="like-inactive" type="submit" name = "action" value="like"><i class="fa-solid fa-thumbs-up"></i></button>
+                  {% endif %}
+                  <button type="submit" name = "action" value="dislike"><i class="fa-solid fa-thumbs-down"></i></button>
+                </form>
+                Likes: {{ row["likes_count"]|default(0) }}
+              </div>
+
+              <div class="mypost-btn" style>
+                <button><a href="/view_post?id={{ row["post_id"]}}">View Post</a></button>
+              </div>
+
+              <div class="cmt-section"> 
+                Comments
+                <div class="comments">
+                <form>
+                  <input name="post_id" value ="{{ row['post_id']}}" type = "hidden"> 
+                  {% for row in result %}
+                    {{row["username"]}} {{row["comment"]}} <br><br> 
+                  {% endfor %}
+                  </div>
+                </form>
+                <form action="/feed/comment">  
+                  <input name="post_id" value ="{{ row['post_id']}}" type = "hidden"> 
+                  <input type="text" id="comment" name="comment" placeholder="Add a comment"/><br />
+                  <button type="submit">Comment</button>
+                </form>
+              </div>
+            </div>
+            <div class = "col-md-6 album-cvr">
+              <div class = "postimg-container">
+                <img class="right-image" src="{{ row["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row dropdown">
+          <button onclick="myFunction()" class="dropbtn"><i class="fa-solid fa-v"></i></button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+    {% endfor %}
+    <script>
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+      window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }
+      </script>
+
+{% endblock %}

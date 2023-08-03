@@ -100,11 +100,13 @@ def feed():
     env.filters['reversed'] = reversed  
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            sql = """SELECT * FROM posts 
-                    LEFT JOIN users ON posts.user_id = users.id WHERE id != %s
+            sql = """SELECT * FROM posts LEFT JOIN users AS post_users ON posts.user_id = post_users.id
+                    LEFT JOIN comments ON comments.post_id = posts.post_id LEFT JOIN users AS comment_users ON comments.user_id
+                     = comment_users.id WHERE post_users.id != %s
                 """
             cursor.execute(sql, session["id"])
             result = cursor.fetchall()
+
     return render_template("feed.html", result=result)
 
 # /post?id=1
@@ -503,15 +505,18 @@ def add_comment(user_id, post_id, comment):
     connection = create_connection()
     try:
         with connection.cursor() as cursor:
-            sql = "INSERT INTO comments (user_id, post_id, comment) VALUES (%s, %s, %s)"
-            cursor.execute(sql, (user_id, post_id, comment))
+            if comment:
+                sql = "INSERT INTO comments (user_id, post_id, comment) VALUES (%s, %s, %s)"
+                cursor.execute(sql, (user_id, post_id, comment))
+            else:
+                pass
         connection.commit()
     finally:
         connection.close()
 
-@app.route("/view_comments")
-def view_comments(user_id, post_id, comment):
-    connection = create_connection()
+# @app.route("/view_comments")
+# def view_comments(user_id, post_id, comment):
+#     connection = create_connection()
 
 @app.route("/feed/comment")
 def comment():

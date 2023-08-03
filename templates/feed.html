@@ -4,22 +4,22 @@
     <div class="page-head">
       <p>Your Feed</p>
     </div>
-    {% for row in result|reverse %}
-        <div class="ind_post">
-          <div class="row">
-            <div class="col-sm-6 left-post">
-              <a href="/view?id={{ row["user_id"]}}"><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-              <a href="/view?id={{ row["user_id"]}}"" class="post-user">{{ row["username"]}}</a><br>
-              
-              <audio controls class = "post-audio">
-                <source src="{{ row["audio"] or 'None'}}">
+    {% for _, row in result|groupby('post_id')|reverse %}
+    <div class="ind_post">
+      <div class="row">
+        <div class="col-sm-6 left-post">
+          {% set post = row[0] %}
+            <a href="/view?id={{ post["user_id"]}}"><img class="post-img" src ="{{ post["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+            <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
+            <audio controls class = "post-audio">
+                <source src="{{ post["audio"] or 'None'}}">
               </audio>
-              <div class="post-content">{{ row["content"]|safe }}</div>
-              <div class="post-genre">Genre : {{row["genre"]}}</div>
-              <div class = "post-buttons">
+            <div class="post-content"> {{ post["content"]|safe }} </div>
+            <div class="post-genre">Genre : {{post["genre"]}}</div>
 
+            <div class = "post-buttons">
                 <form action="/feed/like" method="POST">
-                  <input name="post_id" value ="{{ row['post_id']}}" type = "hidden">   
+                  <input name="post_id" value ="{{ post['post_id']}}" type = "hidden">   
                   {% if session["liked"] %}
                   <button class="like-active" type="submit" name = "action" ><i class="fa-solid fa-thumbs-up"></i></button>
                   {% else %}
@@ -27,51 +27,28 @@
                   {% endif %}
                   <button type="submit" name = "action" value="dislike"><i class="fa-solid fa-thumbs-down"></i></button>
                 </form>
+                Likes: {{ post["likes_count"]|default(0) }}
+            </div>
 
-                Likes: {{ row["likes_count"]|default(0) }}
-              </div>
-              <div class="mypost-btn" style>
-                <button><a href="/view_post?id={{ row["post_id"]}}">View Post</a></button>
-              </div>
-              Comments
-              <form action="/feed/comment">
-                <input name="post_id" value ="{{ row['post_id']}}" type = "hidden">  
-                <input type="text" id="comment" name="comment"/><br />
-                <button>Comment</button>
-              </form>
-            </div>
-            <div class = "col-md-6 album-cvr">
-              <div class = "postimg-container">
-                <img class="right-image" src="{{ row["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
-              </div>
-            </div>
+            <h4>Comments:</h4>
+          {% for comment in row %}
+              <p>{{ comment["comment"] }}</p>
+          {% endfor %}
+          <div class="cmt-section"> 
+            <form action="/feed/comment">  
+                <input name="post_id" value ="{{ post['post_id']}}" type = "hidden"> 
+                <input type="text" id="comment" name="comment" placeholder="Add a comment"/><br />
+                <button type="submit">Comment</button>
+            </form>
           </div>
         </div>
-        <div class="row dropdown">
-          <button onclick="myFunction()" class="dropbtn"><i class="fa-solid fa-v"></i></button>
-          <div id="myDropdown" class="dropdown-content">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+        <div class = "col-md-6 album-cvr">
+          <div class = "postimg-container">
+            <img class="right-image" src="{{ post["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
           </div>
         </div>
+      </div>
+    </div>
     {% endfor %}
-    <script>
-      function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-      }
-      window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-          var dropdowns = document.getElementsByClassName("dropdown-content");
-          var i;
-          for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-              openDropdown.classList.remove('show');
-            }
-          }
-        }
-      }
-      </script>
 
 {% endblock %}

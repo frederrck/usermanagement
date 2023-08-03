@@ -43,18 +43,24 @@
           </div>
         </div>
       </nav>
-
-
-
     {% for message in get_flashed_messages() %}
         <h4 class = "message">{{message}}</h4>
     {% endfor %}
 
 
+    
     <!--body info goes in here-->
     {% block content %}
     
     {% endblock %}
+    
+
+
+
+
+
+
+
 
 
     <script>
