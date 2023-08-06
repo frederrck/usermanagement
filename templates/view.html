@@ -18,9 +18,6 @@
         <td><a href = "mailto: {{ result["email"] }}">{{ result["email"] }}</a></td>
         <!-- Actions -->
         <td>
-            <a href = "/delete?id= {{ result["id"] }}" onclick = "return confirm('Confirm delete')">Delete</a>
-        </td>
-        <td>
             <a href = "/update?id= {{ result["id"] }}">Edit</a>    
         </td>
         <td>

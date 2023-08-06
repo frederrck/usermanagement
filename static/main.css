@@ -151,6 +151,11 @@ img[alt=profile] {
         min-width: 500px;
     }
 
+    .home-sub .row{
+        background-color: black;
+        height:50px;
+    }
+
     .home-sub h1{
         margin-bottom: 40px;
     }
@@ -260,14 +265,15 @@ img[alt=profile] {
 /*** ADD POST PAGE ***/
 
 .addpost{
-    width: 50%;
+    width: 40%;
+    min-width: 400px;
     margin: auto;
-    margin-top:5%;
-
+    margin-top: 40px;
+    background-color: grey;
+    padding:20px;
+    color:white;
 }
-    .addpost form{
-        height: 300px;
-    }
+
 
     .addpost button{
         border-radius: 10px;
@@ -286,6 +292,9 @@ img[alt=profile] {
         font-weight: 600;
     }
 
+.upload {
+    background-color: #434178;
+}
 
 
 /* view profile */
@@ -534,6 +543,11 @@ img[alt=profile] {
 
 .comments{
     background-color:grey;
+}
+
+.ind-comment{
+    background-color:#4fd9b8;
+    color:#434178
 }
 
 /* sign up and login forms */

@@ -11,7 +11,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 
-
 def create_connection():
     return pymysql.connect(
         host="10.0.0.17",
@@ -46,6 +45,7 @@ def home():
             result = cursor.fetchall()
     return render_template("home.html", result=result)
 
+
 # View Page
 @app.route("/view")
 def view_user():
@@ -69,6 +69,7 @@ def view_user():
             cursor.execute(sql, values)
             result2 = cursor.fetchall() 
     return render_template("view.html", result=result, result2=result2)
+
 
 # View Page
 @app.route("/viewprofile")
@@ -94,6 +95,7 @@ def view_profile():
             result2 = cursor.fetchall() 
     return render_template("viewprofile.html", result2 = result2, result = result)
 
+
 @app.route("/feed")
 def feed():
     env = Environment()
@@ -109,23 +111,6 @@ def feed():
 
     return render_template("feed.html", result=result)
 
-# /post?id=1
-# view individual post
-# @app.route("/my_posts")
-# def my_posts():
-#     with create_connection() as connection:
-#         with connection.cursor() as cursor:
-#             sql = """SELECT * FROM posts 
-#                     LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
-#                 """
-            
-#             values = {
-#                 session["id"]
-#             }
-
-#             cursor.execute(sql, values)
-#             result = cursor.fetchall()    
-#     return render_template("my_posts.html", result=result)
 
 @app.route("/post/add", methods = ["GET", "POST"])
 def add_post():
@@ -160,6 +145,7 @@ def add_post():
 
     else:
         return render_template("post_add.html")  
+
 
 # Login Page
 @app.route("/login", methods = ['GET', 'POST'])
@@ -297,7 +283,6 @@ def update():
         return render_template("update.html", result=result)
 
 
-
 # DELETE
 @app.route("/delete")
 def delete():
@@ -400,6 +385,7 @@ def updatepost():
                 result2 = cursor.fetchone()
         return render_template("editpost.html", result=result, result2 = result2)
 
+
 # /admin?id=1&role=admin
 @app.route("/admin")
 def toggle_admin():
@@ -417,6 +403,7 @@ def toggle_admin():
         flash("You don't have permission to do that!")
     return redirect("/")   
 
+
 def user_liked(user_id, post_id):
     connection = create_connection()
     
@@ -433,6 +420,7 @@ def user_liked(user_id, post_id):
     finally:
         connection.close()
 
+
 def add_like(user_id, post_id):
     connection = create_connection()
 
@@ -443,6 +431,7 @@ def add_like(user_id, post_id):
         connection.commit()
     finally:
         connection.close()
+
 
 # updating likes count
 def update_likes(post_id2):
@@ -465,6 +454,7 @@ def update_likes(post_id2):
         connection.commit()
     finally:
         connection.close()
+
 
 def remove_like(user_id, post_id):
     connection = create_connection()
@@ -500,6 +490,7 @@ def like_post():
     update_likes(post_id2)
     return redirect('/feed')
 
+
 #COMMENTS -------------------------------------------------------------------------------------------------------------------------------------------------
 def add_comment(user_id, post_id, comment):
     connection = create_connection()
@@ -514,9 +505,6 @@ def add_comment(user_id, post_id, comment):
     finally:
         connection.close()
 
-# @app.route("/view_comments")
-# def view_comments(user_id, post_id, comment):
-#     connection = create_connection()
 
 @app.route("/feed/comment")
 def comment():
@@ -539,6 +527,7 @@ def viewpost():
             cursor.execute(sql, request.args["id"])
             result = cursor.fetchone()
     return render_template("view_post.html", result=result)
+
 
 # Check Email
 def email_exists(email):

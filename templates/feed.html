@@ -30,11 +30,19 @@
                 Likes: {{ post["likes_count"]|default(0) }}
             </div>
 
+            <div class="mypost-btn" style>
+              <button><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
+            </div>
+
+          <div class="cmt-section"> 
             <h4>Comments:</h4>
           {% for comment in row %}
-              <p>{{ comment["comment"] }}</p>
+              <div class="ind-comment">
+                <h>{{ comment["username"] }}</h5>
+                <p>{{ comment["comment"] }}</p>
+              </div>
           {% endfor %}
-          <div class="cmt-section"> 
+
             <form action="/feed/comment">  
                 <input name="post_id" value ="{{ post['post_id']}}" type = "hidden"> 
                 <input type="text" id="comment" name="comment" placeholder="Add a comment"/><br />

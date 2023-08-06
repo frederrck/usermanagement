@@ -5,9 +5,8 @@
     <p>Upload Post</p>
   </div>
 
-<div class="container">
-    <div class = "addpost">
-        <form method = "post" enctype="multipart/form-data">
+<div class = "addpost">
+    <form method = "post" enctype="multipart/form-data">
         <textarea id="editor" name="content"></textarea><br>
 
         <label for="audio">Attach Audio Here:</label><br />
@@ -19,10 +18,10 @@
         <label for="cover_img">Upload a cover image</label><br>
         <input type="file" id="cover_img" name="cover_img" accept="image/*"><br><br>
 
-        <button type="submit">Submit</button>
-        </form>
-    </div>
+        <button type="submit">Submit  <i class="fa-solid fa-upload"></i></button>
+    </form>
 </div>
+
 <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
 <script>ClassicEditor.create(document.querySelector('#editor'));</script>
 {% endblock %}
