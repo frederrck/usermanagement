@@ -403,7 +403,7 @@ img[alt=profile] {
 }
 
 .left-post {
-    padding:30px;
+    padding:50px;
 }
 
 .ind_post audio{
@@ -432,6 +432,9 @@ img[alt=profile] {
     overflow: hidden;
 
 }
+
+    .postimg-container audio{
+    }
 
 .page-head{
     width: 60%;
@@ -480,10 +483,6 @@ img[alt=profile] {
 
 /*css for a post*/
 
-.post-audio{
-    margin:10px;
-}
-
 .post-content{
     background-color:white;
     color:#434178;
@@ -496,10 +495,6 @@ img[alt=profile] {
 }
 
 
-
-.post-buttons, .mypost-btn{
-    margin-left:10px;
-}
 
 .mypost-btn a{
     color:black;    
@@ -531,7 +526,6 @@ img[alt=profile] {
     }
 
 .cmt-section{
-    margin-left:10px;
     margin-top:10px;
 }
 
@@ -546,8 +540,21 @@ img[alt=profile] {
 }
 
 .ind-comment{
-    background-color:#4fd9b8;
-    color:#434178
+    background-color:#434178;
+    color:white;
+    margin:2px;
+    border-radius: 3px;
+    padding-left:7px;
+}
+
+.scrollcomments{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height:130px;
+    padding:10px;
+    padding-top:10px;
+    background-color: #AFD2E9;
+    
 }
 
 /* sign up and login forms */
