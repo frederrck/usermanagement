@@ -393,17 +393,24 @@ img[alt=profile] {
 /* new ind feed */
 .ind_post{
     width:50%;
-    min-width: 500px;
+    min-width: 700px;
     margin: 0 auto;
     background-color:#434178;
-    margin-top: 30px;
+    margin-top: 50px;
+    margin-bottom:50px;
     color:white;
     box-shadow: 0 0 10px black;
     height: auto;
+
 }
 
 .left-post {
-    padding:50px;
+    padding:40px;
+}
+
+.view-post{
+    position: relative;
+    
 }
 
 .ind_post audio{
@@ -420,12 +427,7 @@ img[alt=profile] {
     margin:10px;
 }
 
-.right-image {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    aspect-ratio: 1/1;
-}
+
 
 .postimg-container {
     height: 100%;
@@ -434,6 +436,8 @@ img[alt=profile] {
 }
 
     .postimg-container audio{
+        margin-left:5%;
+        margin-top:40px;
     }
 
 .page-head{
@@ -491,10 +495,37 @@ img[alt=profile] {
 
 .post-genre{
     font-size: 13px;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
+    margin-left:5%;
+    color:black;
 }
 
+/** RIGHT PART OF THE POST **/
+.row{
+    --bs-gutter-x: 0rem !important;
+}
 
+.right-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    padding: 11%;
+}
+
+.right-post{
+    background-color: #AFD2E9;
+}
+.postimg-container {
+    height: 100%;
+    overflow: hidden;
+
+}
+
+    .postimg-container audio{
+        margin-left:5%;
+        margin-top:-4px;
+    }
 
 .mypost-btn a{
     color:black;    

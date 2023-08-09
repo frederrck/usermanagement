@@ -1,24 +1,11 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-    <div class="page-head">
-      <p>Your Feed</p>
-    </div>
     {% for _, row in result|groupby('post_id')|reverse %}
     <div class="ind_post">
       <div class="row post-row">
-        {% set post = row[0] %}
-        <div class = "col-md-6 right-post">
-          <div class = "postimg-container">
-            <img class="right-image" src="{{ post["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
-            <audio controls class = "post-audio">
-                <source src="{{ post["audio"] or 'None'}}">
-            </audio>
-            <div class="post-genre">Genre : {{post["genre"]}}</div>
-
-          </div>
-      </div>
-        <div class="col-md-6 left-post">  
+        <div class="col-md-6 left-post">
+          {% set post = row[0] %}
             <a href="/view?id={{ post["user_id"]}}"><img class="post-img" src ="{{ post["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
             <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
             
@@ -37,7 +24,7 @@
                 Likes: {{ post["likes_count"]|default(0) }}
             </div>
 
-            <div class="mypost-btn view-post" style>
+            <div class="mypost-btn" style>
               <button><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
             </div>
 
@@ -59,7 +46,16 @@
             </form>
           </div>
         </div>
+        <div class = "col-md-6 right-post">
+            <div class = "postimg-container">
+              <img class="right-image" src="{{ post["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+              <audio controls class = "post-audio">
+                  <source src="{{ post["audio"] or 'None'}}">
+              </audio>
+              <div class="post-genre">Genre : {{post["genre"]}}</div>
 
+            </div>
+        </div>
       </div>
     </div>
     {% endfor %}
