@@ -1,0 +1,5 @@
+- Time stamps for comments and for posts. 
+
+- Fix the name for the comments 
+
+- 

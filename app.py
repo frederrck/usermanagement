@@ -108,6 +108,7 @@ def feed():
                 """
             cursor.execute(sql, session["id"])
             result = cursor.fetchall()
+            print(result)
 
     return render_template("feed.html", result=result)
 
