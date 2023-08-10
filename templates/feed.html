@@ -23,16 +23,15 @@
             <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
             
             <div class="post-content"> {{ post["content"]|safe }} </div>
-
             <div class = "post-buttons">
                 <form action="/feed/like" method="POST">
                   <input name="post_id" value ="{{ post['post_id']}}" type = "hidden">   
                   {% if session["liked"] %}
-                  <button class="like-active" type="submit" name = "action" ><i class="fa-solid fa-thumbs-up"></i></button>
+                  <button class="like-active" type="submit" name = "action" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
                   {% else %}
-                  <button class="like-inactive" type="submit" name = "action" value="like"><i class="fa-solid fa-thumbs-up"></i></button>
+                  <button class="like-inactive" type="submit" name = "action" value="like" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
                   {% endif %}
-                  <button type="submit" name = "action" value="dislike"><i class="fa-solid fa-thumbs-down"></i></button>
+                  <button type="submit" name = "action" value="dislike" aria-label="Dislike"><i class="fa-solid fa-thumbs-down"></i></button>
                 </form>
                 Likes: {{ post["likes_count"]|default(0) }}
             </div>
@@ -46,7 +45,7 @@
             <div class="scrollcomments">
               {% for comment in row %}
                 <div class="ind-comment">
-                  <h>{{ comment["username"] }}</h5>
+                  <h>{{ comment["comment_users.username"] }}</h5>
                   <p>{{ comment["comment"] }}</p>
                 </div>
               {% endfor %}
