@@ -3,6 +3,12 @@
 {% block content %}
         <div class="ind_post">
           <div class = "row">
+            <div class = "col-md-6 right-post">
+              <div class = "postimg-container">
+                <img class="right-image" src="{{ result["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+              </div>
+            </div>
+
             <div class = "col-md-6 left-post">
               <!-- Usable hidden fields -->
               <input name="id" value ="{{ session['id']}}" type = "hidden">
@@ -39,11 +45,7 @@
             </div>
             
 
-            <div class = "col-md-6 album-cvr">
-              <div class = "postimg-container">
-                <img class="right-image" src="{{ result["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
-              </div>
-            </div>
+            
           </div>
         </div>
 

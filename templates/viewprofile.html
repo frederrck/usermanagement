@@ -48,38 +48,63 @@
     <p> Your Posts </p>
 </div>
 
-{% for row in result2|reverse %}
-<div class="ind_post">
-  <div class = "row ">
-    <div class = "col-md-6 left-post">
-      <!-- Usable hidden fields -->
-      <input name="id" value ="{{ session['id']}}" type = "hidden">
-      <input name="post_id" value ="{{ row['post_id']}}" type = "hidden">
+{% for _, row in result2|groupby('post_id')|reverse %}
+    <div class="ind_post">
+      <div class="row post-row">
+        {% set post = row[0] %}
+        <div class = "col-md-6 right-post">
+          <div class = "postimg-container">
+            <img class="right-image" src="{{ post["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
 
-      <a><img class="post-img" src ="{{ row["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-      <a class="post-user">{{ row["username"]}}</a><br>
+            <div class="song-title"> 
+              <h3>{{post["song_name"]}}</h3>
+              <h6>{{post["artist"]}}</h6>
+            </div>
 
-      <audio controls class="post-audio">
-        <source name="audio" value = "{{ row["audio"]}}" src="{{ row["audio"]}}">
-      </audio>
+            <audio controls class = "post-audio">
+                <source src="{{ post["audio"] or 'None'}}">
+            </audio>
+            <div class="post-content"> {{ post["content"]|safe }} </div>
+          </div>
+      </div>
+        <div class="col-md-6 left-post">  
+            <div class="post-user-details">
+              <a href="/view?id={{ post["user_id"]}}"><img class="post-img" src ="{{ post["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+              <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
+            </div>
+            
+            
+            <div class="mypost-btn">
+                <button class="delbtn"><a href="/delete?id={{ post["post_id"]}}&audio={{ post["audio"]}}" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a></button>
+                <button class="delbtn"><a href="/my_posts/edit?id={{ post["post_id"]}}" ><i class="fa-solid fa-pen-to-square"></i></a></button>
+                <button class="view-post"><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
+                
+                Likes: {{ post["likes_count"]|default(0) }}
+            </div>
 
-      <div class="post-content">{{ row["content"]|safe }}</div>
-      <div class="post-genre">Genre : {{row["genre"]}}</div>
-        Likes: {{ row["likes_count"]|default(0) }}
-      <div class="mypost-btn">
-        <button class="delbtn"><a href="/delete?id={{ row["post_id"]}}&audio={{ row["audio"]}}" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a></button>
-        <button class="delbtn"><a href="/my_posts/edit?id={{ row["post_id"]}}" ><i class="fa-solid fa-pen-to-square"></i></a></button>
-        <button><a href="/view_post?id={{ row["post_id"]}}">View Post</a></button>
-      </div>  
-    </div>
-    <div class = "col-md-6 album-cvr">
-      <div class = "postimg-container">
-        <img class="right-image" src="{{ row["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+            
+
+          <div class="cmt-section"> 
+            <h4>Comments:</h4>
+            <div class="scrollcomments">
+              {% for comment in row %}
+                <div class="ind-comment">
+                  <h5>{{ comment["comment_users.username"] }}</h5>
+                  <p>{{ comment["comment"] }}</p>
+                </div>
+              {% endfor %}
+            </div> 
+
+            <form action="/feed/comment">  
+                <input name="post_id" value ="{{ post['post_id']}}" type = "hidden"> 
+                <input type="text" id="comment" name="comment" placeholder="Add a comment"/><br />
+                <button type="submit">Comment</button>
+            </form>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-</div>
-{% endfor %}
-
+    {% endfor %}
 
 {% endblock %}

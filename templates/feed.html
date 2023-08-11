@@ -11,18 +11,25 @@
         <div class = "col-md-6 right-post">
           <div class = "postimg-container">
             <img class="right-image" src="{{ post["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+
+          <div class="song-title"> 
+            <h3>{{post["song_name"]}}</h3>
+            <h6>{{post["artist"]}}</h6>
+          </div>
+
             <audio controls class = "post-audio">
                 <source src="{{ post["audio"] or 'None'}}">
             </audio>
-            <div class="post-genre">Genre : {{post["genre"]}}</div>
-
+            <div class="post-content"> {{ post["content"]|safe }} </div>
           </div>
       </div>
         <div class="col-md-6 left-post">  
-            <a href="/view?id={{ post["user_id"]}}"><img class="post-img" src ="{{ post["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-            <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
+            <div class="post-user-details">
+              <a href="/view?id={{ post["user_id"]}}"><img class="post-img" src ="{{ post["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
+              <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
+            </div>
             
-            <div class="post-content"> {{ post["content"]|safe }} </div>
+            
             <div class = "post-buttons">
                 <form action="/feed/like" method="POST">
                   <input name="post_id" value ="{{ post['post_id']}}" type = "hidden">   
@@ -32,20 +39,20 @@
                   <button class="like-inactive" type="submit" name = "action" value="like" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
                   {% endif %}
                   <button type="submit" name = "action" value="dislike" aria-label="Dislike"><i class="fa-solid fa-thumbs-down"></i></button>
+                  <button class="view-post"><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
                 </form>
+                
                 Likes: {{ post["likes_count"]|default(0) }}
             </div>
 
-            <div class="mypost-btn view-post" style>
-              <button><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
-            </div>
+            
 
           <div class="cmt-section"> 
             <h4>Comments:</h4>
             <div class="scrollcomments">
               {% for comment in row %}
                 <div class="ind-comment">
-                  <h>{{ comment["comment_users.username"] }}</h5>
+                  <h5>{{ comment["comment_users.username"] }}</h5>
                   <p>{{ comment["comment"] }}</p>
                 </div>
               {% endfor %}

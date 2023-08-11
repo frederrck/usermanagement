@@ -9,11 +9,18 @@
     <form method = "post" enctype="multipart/form-data">
         <textarea id="editor" name="content"></textarea><br>
 
+
         <label for="audio">Attach Audio Here:</label><br />
         <input type="file" id="audio" name="audio" required accept="audio/*"/><br /><br>
 
-        <label for="genre">Genre (e.g Rock, Hip Hop, etc.)</label><br />
-        <input type="text" id="genre" name="genre" required/><br /><br>
+        <label for="genre">Genre</label><br />
+        <input type="text" id="genre" name="genre" placeholder="e.g Rock, Hip Hop, etc."/><br /><br>
+
+        <label for="song">Song Name:</label><br />
+        <input type="text" id="song" name="song" required/><br /><br>
+
+        <label for="artist">Artist Name:</label><br />
+        <input type="text" id="artist" name="artist"/><br /><br>
 
         <label for="cover_img">Upload a cover image</label><br>
         <input type="file" id="cover_img" name="cover_img" accept="image/*"><br><br>

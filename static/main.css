@@ -103,12 +103,38 @@ a:hover{
 /* layout page */
 
 
-.message { 
+.btn-success { 
+    background-color: green;
+    margin-bottom: 0;
+    padding: 1.5%;
+}
+
+.btn-error { 
     background-color: red;
     margin-bottom: 0;
     padding: 1.5%;
 }
 
+.fadeout{
+    animation: fade-out 1s ease 2s forwards;
+}
+@keyframes fade-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
 
 img[alt=profile] {
     border-radius: 50%;
@@ -271,7 +297,7 @@ img[alt=profile] {
     margin-top: 40px;
     background-color: grey;
     padding:20px;
-    color:white;
+    color:black;
 }
 
 
@@ -382,10 +408,13 @@ img[alt=profile] {
 
     .post-user{
         font-size: 30px;
-        color:#AFD2E9;
+        color:black;
+        margin-top:10px;
     }
     .post-content{
-        font-size: 18px;
+        font-size: 16px;
+        margin:20px;
+        margin-top: -10px;
     }
 
 
@@ -393,7 +422,7 @@ img[alt=profile] {
 /* new ind feed */
 .ind_post{
     width:50%;
-    min-width: 700px;
+    min-width: 780px;
     margin: 0 auto;
     background-color:#434178;
     margin-top: 50px;
@@ -404,14 +433,26 @@ img[alt=profile] {
 
 }
 
+.song-title{
+    color:black;
+    margin-bottom: 30px;
+    margin-top:-33px;
+    margin-left:45px;
+
+}
+
 .left-post {
     padding:40px;
 }
 
-.view-post{
-    position: relative;
-    
+.view-post {
+    float: right;
 }
+
+    .view-post a{
+        color:black;
+        
+    }
 
 .ind_post audio{
 
@@ -427,7 +468,10 @@ img[alt=profile] {
     margin:10px;
 }
 
+.post-buttons{
+    margin-top:10px;
 
+}
 
 .postimg-container {
     height: 100%;
@@ -439,6 +483,12 @@ img[alt=profile] {
         margin-left:5%;
         margin-top:40px;
     }
+
+.post-user-details {
+    background-color: #AFD2E9;
+    color:black;
+}
+
 
 .page-head{
     width: 60%;
@@ -511,20 +561,23 @@ img[alt=profile] {
     object-fit: cover;
     aspect-ratio: 1/1;
     padding: 11%;
+    min-width: 100%;
 }
 
 .right-post{
     background-color: #AFD2E9;
 }
+
+
 .postimg-container {
     height: 100%;
     overflow: hidden;
-
 }
 
     .postimg-container audio{
         margin-left:5%;
-        margin-top:-4px;
+        margin-top: -20px;
+        margin-bottom: 20px;
     }
 
 .mypost-btn a{
@@ -542,6 +595,7 @@ img[alt=profile] {
         background-color:white;
         font-size: 17px;
         color:#434178;
+
     }
 
     .updatebtn, .updatebtn a{ 
@@ -581,9 +635,8 @@ img[alt=profile] {
 .scrollcomments{
     overflow-x: hidden;
     overflow-y: auto;
-    height:130px;
+    height:160px;
     padding:10px;
-    padding-top:10px;
     background-color: #AFD2E9;
     
 }

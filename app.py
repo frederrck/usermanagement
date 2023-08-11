@@ -13,12 +13,14 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        host="10.0.0.17",
-        user="fremu",
-        # host="127.0.0.1",
-        # user="root",
-        password="ARENA",
-        db="fremu_test",
+        # host="10.0.0.17",
+        # user="fremu",
+        host="127.0.0.1",
+        user="root",
+        # password="ARENA",
+        password=".magnesiumOxide123",
+        # db="fremu_test",
+        db="user_management",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -137,8 +139,8 @@ def add_post():
                 else:
                     image_path = None
 
-                sql = "INSERT INTO posts (content, audio, genre, cover_img, user_id) VALUES (%s, %s, %s, %s, %s)"
-                values = (request.form['content'], audio_path, request.form["genre"], image_path , session["id"])
+                sql = "INSERT INTO posts (content, audio, genre, cover_img, user_id, song_name, artist) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                values = (request.form['content'], audio_path, request.form["genre"], image_path , session["id"], request.form["song"], request.form["artist"])
                 cursor.execute(sql, values)
                 connection.commit()
                 flash("Posted")
@@ -527,6 +529,8 @@ def viewpost():
                 """
             cursor.execute(sql, request.args["id"])
             result = cursor.fetchone()
+
+            
     return render_template("view_post.html", result=result)
 
 
