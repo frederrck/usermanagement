@@ -6,6 +6,14 @@
             <div class = "col-md-6 right-post">
               <div class = "postimg-container">
                 <img class="right-image" src="{{ result["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
+                <div class="song-title"> 
+                  <h3>{{result["song_name"]}}</h3>
+                  <h6>{{result["artist"]}}</h6>
+                </div>
+                <audio controls class="post-audio">
+                  <source name="audio" value = "{{ result["audio"]}}" src="{{ result["audio"]}}">
+                </audio>
+                <div class="post-content">{{ result["content"]|safe }}</div>
               </div>
             </div>
 
@@ -18,12 +26,8 @@
               <a><img class="post-img" src ="{{ result["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
               <a class="post-user">{{ result["username"]}}</a><br>
 
-              <audio controls class="post-audio">
-                <source name="audio" value = "{{ result["audio"]}}" src="{{ result["audio"]}}">
-              </audio>
-
-              <div class="post-content">{{ result["content"]|safe }}</div>
-              <div class="post-genre">Genre : {{result["genre"]}}</div>
+              
+              
 
               {% if result['user_id'] == session["id"] %}
               <div class="mypost-btn">
@@ -36,6 +40,12 @@
               {% else %}
               <div class="mypost-btn">
                 Likes: {{ result["likes_count"]|default(0) }}
+                <form action="/feed/like" method="POST">
+                  <input name="post_id" value ="{{ result['post_id']}}" type = "hidden">   
+                  <button class="like-active" type="submit" name = "action" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
+                  <button type="submit" name = "action" value="dislike" aria-label="Dislike"><i class="fa-solid fa-thumbs-down"></i></button>
+                  
+                </form>
                 <button><a href="/feed">Back</a></button>
                 
               </div>

@@ -13,14 +13,13 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        # host="10.0.0.17",
-        # user="fremu",
-        host="127.0.0.1",
-        user="root",
-        # password="ARENA",
-        password=".magnesiumOxide123",
-        # db="fremu_test",
-        db="user_management",
+        host="10.0.0.17",
+        user="fremu",
+        # host="127.0.0.1",
+        # user="root",
+        password="ARENA",
+        db="fremu_test",
+        # db="user_management",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -172,7 +171,9 @@ def login():
             session["id"] = result["id"]
             session["first_name"] = result["first_name"]
             session["role"] = result["role"]
+            flash("Logged In", "success")
             return redirect("/feed")
+
         else:
             flash("Incorrect Email or Password")
             redirect('/login')
@@ -544,9 +545,5 @@ def email_exists(email):
             result = cursor.fetchone()
     return result is not None
 
-
-@app.route("/audiotemplate")
-def audioplayer():
-    return render_template("audiotemplate.html")
 
 app.run(debug = True)

@@ -103,39 +103,6 @@ a:hover{
 /* layout page */
 
 
-.btn-success { 
-    background-color: green;
-    margin-bottom: 0;
-    padding: 1.5%;
-}
-
-.btn-error { 
-    background-color: red;
-    margin-bottom: 0;
-    padding: 1.5%;
-}
-
-.fadeout{
-    animation: fade-out 1s ease 2s forwards;
-}
-@keyframes fade-in{
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
-}
-
-@keyframes fade-out{
-    0%{
-        opacity: 1;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 img[alt=profile] {
     border-radius: 50%;
     aspect-ratio: 1 / 1;  /* Makes width and height the same */
@@ -666,3 +633,31 @@ img[alt=profile] {
         box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
     }
 
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+    }
+    
+    .success {background-color: #04AA6D;}
+    .info {background-color: #2196F3;}
+    .warning {background-color: #ff9800;}
+    
+    .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    }
+    
+    .closebtn:hover {
+    color: black;
+    }

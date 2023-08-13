@@ -44,7 +44,16 @@
       </nav>
 
 
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        <span class="closebtn">&times;</span> 
+    {% endwith %}
 
     
     <!--body info goes in here-->
@@ -53,10 +62,18 @@
     {% endblock %}
     
 
-
-    <script src="flashmessage.js"></script>
-
-
+    <script>
+      var close = document.getElementsByClassName("closebtn");
+      var i;
+      
+      for (i = 0; i < close.length; i++) {
+        close[i].onclick = function(){
+          var div = this.parentElement;
+          div.style.opacity = "0";
+          setTimeout(function(){ div.style.display = "none"; }, 600);
+        }
+      }
+      </script>
 
 
 

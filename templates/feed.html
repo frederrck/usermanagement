@@ -31,6 +31,7 @@
             
             
             <div class = "post-buttons">
+              <button class="view-post"><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
                 <form action="/feed/like" method="POST">
                   <input name="post_id" value ="{{ post['post_id']}}" type = "hidden">   
                   {% if session["liked"] %}
@@ -39,7 +40,7 @@
                   <button class="like-inactive" type="submit" name = "action" value="like" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
                   {% endif %}
                   <button type="submit" name = "action" value="dislike" aria-label="Dislike"><i class="fa-solid fa-thumbs-down"></i></button>
-                  <button class="view-post"><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
+                  
                 </form>
                 
                 Likes: {{ post["likes_count"]|default(0) }}
