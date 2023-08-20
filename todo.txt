@@ -2,4 +2,4 @@
 
 - Fix the name for the comments 
 
-- 
+- Fix comments for other pages

@@ -109,7 +109,6 @@ def feed():
                 """
             cursor.execute(sql, session["id"])
             result = cursor.fetchall()
-            print(result)
 
     return render_template("feed.html", result=result)
 
@@ -142,7 +141,7 @@ def add_post():
                 values = (request.form['content'], audio_path, request.form["genre"], image_path , session["id"], request.form["song"], request.form["artist"])
                 cursor.execute(sql, values)
                 connection.commit()
-                flash("Posted")
+                flash("Posted", "success")
         return render_template("post_add.html") 
 
     else:
@@ -175,7 +174,7 @@ def login():
             return redirect("/feed")
 
         else:
-            flash("Incorrect Email or Password")
+            flash("Incorrect Email or Password", "warning")
             redirect('/login')
     return render_template("login.html")
 
@@ -191,7 +190,7 @@ def logout():
 def signup():
     if request.method == "POST":  
         if email_exists(request.form["email"]):
-            flash("That email already exists.")
+            flash("That email already exists.", "info")
             return redirect("/signup")
 
         with create_connection() as connection:
@@ -229,8 +228,8 @@ def signup():
 @app.route("/update", methods = ["GET", "POST"])
 def update(): 
     if not can_access(request.args["id"]):
-        flash("You don't have permission to do that")
-        return redirect('/')
+        flash("You don't have permission to do that", "warning")
+        return redirect('/feed')
 
     if request.method == "POST":
         with create_connection() as connection:
@@ -291,9 +290,9 @@ def update():
 @app.route("/delete")
 def delete():
 
-    # if not can_access(request.args["id"]):
-    #     flash("You don't have permission to do that")
-    #     return redirect('/')
+    if not can_access(request.args["user_id"]):
+        flash("You don't have permission to do that", "warning")
+        return redirect('/feed')
 
     with create_connection() as connection:
         with connection.cursor() as cursor: 
@@ -327,9 +326,9 @@ def delete():
 # Update Own Posts. 
 @app.route("/my_posts/edit", methods = ["GET", "POST"])
 def updatepost(): 
-    # if not can_access(request.args["id"]):
-    #     flash("You don't have permission to do that")
-    #     return redirect('/')
+    if not can_access(request.args["id"]):
+        flash("You don't have permission to do that")
+        return redirect('/')
 
     
     if request.method == "POST":
@@ -348,7 +347,7 @@ def updatepost():
                             os.remove(request.form["old_image"])
                         else:
                             # Handle the case when the file doesn't exist
-                            flash("Previous image file not found")
+                            flash("Previous image file not found", "warning")
                 else:
                     image_path = request.form["old_image"]
 
@@ -404,7 +403,7 @@ def toggle_admin():
                 cursor.execute(sql, values)
                 connection.commit()
     else:
-        flash("You don't have permission to do that!")
+        flash("You don't have permission to do that!", "warning")
     return redirect("/")   
 
 
@@ -481,7 +480,7 @@ def like_post():
 
     if request.form["action"] == "like":
         if user_liked(user_id, post_id):
-            flash("Already Liked")
+            flash("Already Liked", "info")
         else:
             add_like(user_id, post_id)
 
@@ -489,7 +488,7 @@ def like_post():
         if user_liked(user_id, post_id):
             remove_like(user_id, post_id)
         else:
-            flash("No like to dislike :)")
+            flash("No like to dislike", "info")
 
     update_likes(post_id2)
     return redirect('/feed')

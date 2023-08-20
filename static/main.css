@@ -569,7 +569,7 @@ img[alt=profile] {
         margin:auto;
         color:black;
         margin-top:20px;
-        font-size: 100px;
+        font-size: 30px;
         padding:10px;
     }
     
@@ -636,7 +636,6 @@ img[alt=profile] {
 
 .alert {
     padding: 20px;
-    background-color: #f44336;
     color: white;
     opacity: 1;
     transition: opacity 0.6s;
@@ -660,4 +659,9 @@ img[alt=profile] {
     
     .closebtn:hover {
     color: black;
+    }
+
+    .flashes {
+        list-style-type: none;
+        width:100%;
     }
