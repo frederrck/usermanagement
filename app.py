@@ -27,7 +27,7 @@ def create_connection():
 
 def can_access(id):
     if "logged_in" in session:
-        matching_id = session["id"] == int(request.args["id"])
+        matching_id = session["id"] == int(id)
         is_admin = session["role"] == "admin"
         return matching_id or is_admin
 
@@ -289,7 +289,6 @@ def update():
 # DELETE
 @app.route("/delete")
 def delete():
-
     if not can_access(request.args["user_id"]):
         flash("You don't have permission to do that", "warning")
         return redirect('/feed')
