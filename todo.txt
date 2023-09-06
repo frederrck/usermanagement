@@ -1,5 +1,10 @@
 - Time stamps for comments and for posts. 
 
-- Fix the name for the comments 
 
 - Fix comments for other pages
+
+- Address the viewing of posts on the user's pages.
+
+- Editing Posts
+
+- Fix deleting audio and images when post is deleted.
