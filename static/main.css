@@ -547,6 +547,10 @@ img[alt=profile] {
         margin-bottom: 20px;
     }
 
+.mypost-btn{ 
+    margin-top: 5px;
+}
+
 .mypost-btn a{
     color:black;    
 }
@@ -635,26 +639,28 @@ img[alt=profile] {
 
 
 .alert {
-    padding: 20px;
     color: white;
     opacity: 1;
     transition: opacity 0.6s;
     margin-bottom: 15px;
+    text-align: center;
+    list-style-type: none;
+    font-size:20px;
+    width: 100%;
     }
     
-    .success {background-color: #04AA6D;}
-    .info {background-color: #2196F3;}
-    .warning {background-color: #ff9800;}
+    .success {background-color: #04AA6D; padding:20px;}
+    .info {background-color: #2196F3; padding:20px;}
+    .warning {background-color: #ff9800; padding:20px;}
     
     .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 30px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
     }
     
     .closebtn:hover {

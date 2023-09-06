@@ -73,12 +73,11 @@
               <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
             </div>
             
-            
             <div class="mypost-btn">
                 <button class="delbtn"><a href="/delete?id={{ post["post_id"]}}&audio={{ post["audio"]}}&user_id={{post["user_id"]}}" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a></button>
-                <button class="delbtn"><a href="/my_posts/edit?id={{ post["post_id"]}}" ><i class="fa-solid fa-pen-to-square"></i></a></button>
+                <button class="delbtn"><a href="/my_posts/edit?id={{ post["post_id"]}}&user_id={{post["user_id"]}}"><i class="fa-solid fa-pen-to-square"></i></a></button>
                 <button class="view-post"><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
-                
+            
                 Likes: {{ post["likes_count"]|default(0) }}
             </div>
             

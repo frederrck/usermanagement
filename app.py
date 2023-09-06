@@ -2,6 +2,7 @@ import pymysql
 import hashlib
 import uuid
 import os
+from datetime import datetime, timedelta
 from jinja2 import Environment
 from flask import Flask, render_template, request, redirect, session, flash
 app = Flask(__name__)
@@ -65,7 +66,7 @@ def view_user():
                 """
             
             values = {
-                request.args["id"]
+                session["id"]
             }
             cursor.execute(sql, values)
             result2 = cursor.fetchall() 
@@ -110,6 +111,7 @@ def feed():
             cursor.execute(sql, session["id"])
             result = cursor.fetchall()
 
+            print(result)
     return render_template("feed.html", result=result)
 
 
@@ -193,6 +195,12 @@ def signup():
             flash("That email already exists.", "info")
             return redirect("/signup")
 
+        dob = datetime.strptime(request.form["dateofbirth"], "%Y-%m-%d")
+        min_dob = datetime.now() - timedelta(days=14*365) # 14 years old
+        if dob >= min_dob: 
+            flash("You must be at least 14 years old to sign up", "info")
+            return redirect("/signup")
+
         with create_connection() as connection:
             with connection.cursor() as cursor: 
 
@@ -200,7 +208,7 @@ def signup():
                 if image:
                     # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                 else:
                     image_path = None
@@ -405,6 +413,7 @@ def toggle_admin():
         flash("You don't have permission to do that!", "warning")
     return redirect("/")   
 
+# Likes -------------------------------------------------------------------------------------------------------------------------------------------------
 
 def user_liked(user_id, post_id):
     connection = create_connection()
@@ -507,6 +516,20 @@ def add_comment(user_id, post_id, comment):
     finally:
         connection.close()
 
+# def delete_comment(user_id, post_id, comment):
+#     connection = create_connection()
+
+#     if not can_access(request.args["comments_users.id"]):
+#         flash("You don't have permission to do that")
+#         return redirect('/feed')
+
+#     try:
+#         with connection.cursor() as cursor:
+#             sql = "DELETE FROM comments WHERE comments.id = %s AND user = %s"
+#             cursor.execute(sql, (, post_id))
+#         connection.commit()
+#     finally:
+#         connection.close()
 
 @app.route("/feed/comment")
 def comment():
