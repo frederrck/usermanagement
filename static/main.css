@@ -548,8 +548,12 @@ img[alt=profile] {
     }
 
 .mypost-btn{ 
-    margin-top: 5px;
+    margin-top: 5px;    
 }
+
+    .mypost-btn button{
+        margin-top:8px;
+    }
 
 .mypost-btn a{
     color:black;    

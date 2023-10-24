@@ -40,7 +40,7 @@ def encrypt(password):
 # Home Page
 @app.route("/")
 def home():
-    with create_connection() as connection: 
+    with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = "SELECT * FROM users"
             cursor.execute(sql)
@@ -86,16 +86,17 @@ def view_profile():
             cursor.execute(sql, values)
             result = cursor.fetchone()
 
-            sql = """SELECT * FROM posts 
-                    LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
+            sql = """SELECT * FROM posts
+                    LEFT JOIN users ON posts.user_id
+                    = users.id WHERE users.id = %s
                 """
-            
+
             values = {
                 session["id"]
             }
             cursor.execute(sql, values)
-            result2 = cursor.fetchall() 
-    return render_template("viewprofile.html", result2 = result2, result = result)
+            result2 = cursor.fetchall()
+    return render_template("viewprofile.html", result2=result2, result=result)
 
 
 @app.route("/feed")
@@ -165,7 +166,7 @@ def login():
                     encrypt(request.form["password"])
                 )
 
-                cursor.execute(sql,values)
+                cursor.execute(sql, values)
                 result = cursor.fetchone()
         if result:
             session["logged_in"] = True
@@ -186,23 +187,32 @@ def logout():
     session.clear()
     return redirect("/")
 
+# Check Email
+def email_exists(email):
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = "SELECT * FROM users WHERE email = %s"
+            values = (email)
+            cursor.execute(sql, values)
+            result = cursor.fetchone()
+    return result is not None
 
 # Sign up Page
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-    if request.method == "POST":  
+    if request.method == "POST":
         if email_exists(request.form["email"]):
             flash("That email already exists.", "info")
             return redirect("/signup")
 
         dob = datetime.strptime(request.form["dateofbirth"], "%Y-%m-%d")
-        min_dob = datetime.now() - timedelta(days=14*365) # 14 years old
-        if dob >= min_dob: 
+        min_dob = datetime.now() - timedelta(days=14*365)  # 14 years old
+        if dob >= min_dob:
             flash("You must be at least 14 years old to sign up", "info")
             return redirect("/signup")
 
         with create_connection() as connection:
-            with connection.cursor() as cursor: 
+            with connection.cursor() as cursor:
 
                 image = request.files["image"]
                 if image:
@@ -214,7 +224,8 @@ def signup():
                     image_path = None
 
                 sql = """INSERT INTO users
-                    (first_name, last_name, email, username, password, dateofbirth, image)
+                    (first_name, last_name, email, 
+                    username, password, dateofbirth, image)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 values = (
                     request.form["first_name"],
@@ -222,8 +233,8 @@ def signup():
                     request.form["email"],
                     request.form["username"],
                     encrypt(request.form["password"]),
-                    request.form["dateofbirth"], 
-                    image_path 
+                    request.form["dateofbirth"],
+                    image_path
                 )
                 cursor.execute(sql, values)
                 connection.commit()
@@ -253,7 +264,7 @@ def update():
 
                 if image:
                     ext = os.path.splitext(image.filename)[1]
-                    image_path = "/static/images/" + str(uuid.uuid4())[:8] + ext
+                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
                     if request.form["old_image"]:
                         os.remove(request.form["old_image"])
@@ -333,9 +344,9 @@ def delete():
 # Update Own Posts. 
 @app.route("/my_posts/edit", methods = ["GET", "POST"])
 def updatepost(): 
-    if not can_access(request.args["id"]):
-        flash("You don't have permission to do that")
-        return redirect('/')
+    # if not can_access(request.args["id"]):
+    #     flash("You don't have permission to do that")
+    #     return redirect('/')
 
     
     if request.method == "POST":
@@ -367,7 +378,7 @@ def updatepost():
                 if not request.form['content']:
                     values = (
                         request.form["old_content"],
-                        image_path,
+                        request.form["old_image"],
                         request.args['id']
                     )
                 else:
@@ -556,15 +567,7 @@ def viewpost():
     return render_template("view_post.html", result=result)
 
 
-# Check Email
-def email_exists(email):
-    with create_connection() as connection:
-        with connection.cursor() as cursor:
-            sql = "SELECT * FROM users WHERE email = %s"
-            values = (email)
-            cursor.execute(sql, values)
-            result = cursor.fetchone()
-    return result is not None
+
 
 
 app.run(debug = True)

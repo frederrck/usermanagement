@@ -7,4 +7,8 @@
 
 - Editing Posts
 
-- Fix deleting audio and images when post is deleted.
+- Fix  images when post is deleted.
+
+- Find a more efficient way to display comments
+
+- Get some feedback on website.
