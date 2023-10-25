@@ -26,6 +26,7 @@ def create_connection():
     )
 
 
+# User can access if matching id or is admin
 def can_access(id):
     if "logged_in" in session:
         matching_id = session["id"] == int(id)
@@ -33,6 +34,7 @@ def can_access(id):
         return matching_id or is_admin
 
 
+# Encrypts the password
 def encrypt(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
@@ -99,6 +101,7 @@ def view_profile():
     return render_template("viewprofile.html", result2=result2, result=result)
 
 
+# Feed Page
 @app.route("/feed")
 def feed():
     env = Environment()
@@ -111,11 +114,10 @@ def feed():
                 """
             cursor.execute(sql, session["id"])
             result = cursor.fetchall()
-
-            print(result)
     return render_template("feed.html", result=result)
 
 
+# Add Post function
 @app.route("/post/add", methods = ["GET", "POST"])
 def add_post():
     if request.method == "POST":
@@ -133,6 +135,7 @@ def add_post():
 
                 image = request.files["cover_img"]
                 if image:
+                    # Choose a random filename to prevent clashes
                     ext = os.path.splitext(image.filename)[1]
                     filename = str(uuid.uuid4())[:8] + ext
                     image_path = os.path.join("static", "images", filename)
@@ -144,7 +147,7 @@ def add_post():
                 values = (request.form['content'], audio_path, request.form["genre"], image_path , session["id"], request.form["song"], request.form["artist"])
                 cursor.execute(sql, values)
                 connection.commit()
-                flash("Posted", "success")
+                flash("Posted Successfully", "success")
         return render_template("post_add.html") 
 
     else:
@@ -182,12 +185,14 @@ def login():
     return render_template("login.html")
 
 
+# Log out of account
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
 
-# Check Email
+
+# Check if email exists on sign up
 def email_exists(email):
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -305,7 +310,7 @@ def update():
         return render_template("update.html", result=result)
 
 
-# DELETE
+# Deletion of Posts
 @app.route("/delete")
 def delete():
     if not can_access(request.args["user_id"]):
@@ -341,7 +346,7 @@ def delete():
     return redirect("/viewprofile")
 
 
-# Update Own Posts. 
+# Update Own Posts
 @app.route("/my_posts/edit", methods = ["GET", "POST"])
 def updatepost(): 
     # if not can_access(request.args["id"]):
@@ -426,6 +431,7 @@ def toggle_admin():
 
 # Likes -------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Checks if the user has already liked the post
 def user_liked(user_id, post_id):
     connection = create_connection()
     
@@ -443,6 +449,7 @@ def user_liked(user_id, post_id):
         connection.close()
 
 
+# Adding like into database
 def add_like(user_id, post_id):
     connection = create_connection()
 
@@ -455,7 +462,7 @@ def add_like(user_id, post_id):
         connection.close()
 
 
-# updating likes count
+# Updating likes count
 def update_likes(post_id2):
     connection = create_connection()
 
@@ -477,7 +484,7 @@ def update_likes(post_id2):
     finally:
         connection.close()
 
-
+# User dislikes after liking the post
 def remove_like(user_id, post_id):
     connection = create_connection()
 
@@ -490,30 +497,36 @@ def remove_like(user_id, post_id):
         connection.close()
 
 
-# post likes and dislikes
+# Function to handle the post likes
 @app.route("/feed/like", methods=["POST"])
 def like_post():
     user_id = session["id"]
     post_id = request.form["post_id"] 
     post_id2 = post_id
 
+
+    # Checks if user liked, else add like
     if request.form["action"] == "like":
         if user_liked(user_id, post_id):
             flash("Already Liked", "info")
         else:
             add_like(user_id, post_id)
 
+    # Dislikes if there is a like, else pass
     elif request.form["action"] == "dislike":
         if user_liked(user_id, post_id):
             remove_like(user_id, post_id)
         else:
             flash("No like to dislike", "info")
 
+    # update like count on post
     update_likes(post_id2)
     return redirect('/feed')
 
 
 #COMMENTS -------------------------------------------------------------------------------------------------------------------------------------------------
+
+# insert comment into database
 def add_comment(user_id, post_id, comment):
     connection = create_connection()
     try:
@@ -542,6 +555,8 @@ def add_comment(user_id, post_id, comment):
 #     finally:
 #         connection.close()
 
+
+# Function to handle comment processes
 @app.route("/feed/comment")
 def comment():
     user_id = session["id"]
@@ -565,9 +580,6 @@ def viewpost():
 
             
     return render_template("view_post.html", result=result)
-
-
-
 
 
 app.run(debug = True)
