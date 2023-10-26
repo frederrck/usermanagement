@@ -63,15 +63,15 @@ def view_user():
             cursor.execute(sql, values)
             result = cursor.fetchone()
 
-            sql = """SELECT * FROM posts 
+            sql = """SELECT * FROM posts
                     LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s
                 """
-            
+
             values = {
                 session["id"]
             }
             cursor.execute(sql, values)
-            result2 = cursor.fetchall() 
+            result2 = cursor.fetchall()
     return render_template("view.html", result=result, result2=result2)
 
 
@@ -105,7 +105,7 @@ def view_profile():
 @app.route("/feed")
 def feed():
     env = Environment()
-    env.filters['reversed'] = reversed  
+    env.filters['reversed'] = reversed
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql = """SELECT * FROM posts LEFT JOIN users AS post_users ON posts.user_id = post_users.id
@@ -118,7 +118,7 @@ def feed():
 
 
 # Add Post function
-@app.route("/post/add", methods = ["GET", "POST"])
+@app.route("/post/add", methods=["GET", "POST"])
 def add_post():
     if request.method == "POST":
         with create_connection() as connection:
@@ -144,23 +144,23 @@ def add_post():
                     image_path = None
 
                 sql = "INSERT INTO posts (content, audio, genre, cover_img, user_id, song_name, artist) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                values = (request.form['content'], audio_path, request.form["genre"], image_path , session["id"], request.form["song"], request.form["artist"])
+                values = (request.form['content'], audio_path, request.form["genre"], image_path, session["id"], request.form["song"], request.form["artist"])
                 cursor.execute(sql, values)
                 connection.commit()
                 flash("Posted Successfully", "success")
-        return render_template("post_add.html") 
+        return render_template("post_add.html")
 
     else:
-        return render_template("post_add.html")  
+        return render_template("post_add.html")
 
 
 # Login Page
-@app.route("/login", methods = ['GET', 'POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    if request.method == "POST": 
+    if request.method == "POST":
         with create_connection() as connection:
-            with connection.cursor() as cursor: 
-                sql = """SELECT * FROM users 
+            with connection.cursor() as cursor:
+                sql = """SELECT * FROM users
                          WHERE (email = %s OR username = %s) AND password = %s"""
 
                 values = (
@@ -202,6 +202,7 @@ def email_exists(email):
             result = cursor.fetchone()
     return result is not None
 
+
 # Sign up Page
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -229,7 +230,7 @@ def signup():
                     image_path = None
 
                 sql = """INSERT INTO users
-                    (first_name, last_name, email, 
+                    (first_name, last_name, email,
                     username, password, dateofbirth, image)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 values = (
@@ -249,8 +250,8 @@ def signup():
 
 
 #/update?id=1
-@app.route("/update", methods = ["GET", "POST"])
-def update(): 
+@app.route("/update", methods=["GET", "POST"])
+def update():
     if not can_access(request.args["id"]):
         flash("You don't have permission to do that", "warning")
         return redirect('/feed')
@@ -276,8 +277,7 @@ def update():
                 else:
                     image_path = request.form["old_image"]
 
-
-                sql = """UPDATE users SET 
+                sql = """UPDATE users SET
                     first_name = %s,
                     last_name = %s,
                     email = %s,
@@ -313,24 +313,27 @@ def update():
 # Deletion of Posts
 @app.route("/delete")
 def delete():
+    # Check if user has permission to delete post   
     if not can_access(request.args["user_id"]):
         flash("You don't have permission to do that", "warning")
         return redirect('/feed')
 
     with create_connection() as connection:
-        with connection.cursor() as cursor: 
+        with connection.cursor() as cursor:
             # Get the audio path before deleting the user
-            sql = """SELECT * FROM posts 
+            sql = """SELECT * FROM posts
                 LEFT JOIN users ON posts.user_id = users.id WHERE users.id = %s"""
             values = (request.args["id"])
             cursor.execute(sql, values)
+
+            # Check if the audio file ex
             if "audio" in request.args and request.args["audio"] is not None and request.args["audio"]:
                 audio_file = request.args["audio"]
                 if os.path.exists(audio_file):
                     os.remove(audio_file)
             else:
                 pass
-            
+
             if "image" in request.args and request.args["image"] is not None and request.args["image"]:
                 image_file = request.args["image"]
                 if os.path.exists(image_file):
@@ -347,7 +350,7 @@ def delete():
 
 
 # Update Own Posts
-@app.route("/my_posts/edit", methods = ["GET", "POST"])
+@app.route("/my_posts/edit", methods=["GET", "POST"])
 def updatepost(): 
     # if not can_access(request.args["id"]):
     #     flash("You don't have permission to do that")
@@ -374,12 +377,12 @@ def updatepost():
                 else:
                     image_path = request.form["old_image"]
 
-                sql = """UPDATE posts SET 
+                sql = """UPDATE posts SET
                         content = %s,
                         cover_img = %s
                         WHERE post_id = %s
                     """
-                
+
                 if not request.form['content']:
                     values = (
                         request.form["old_content"],
@@ -395,7 +398,7 @@ def updatepost():
 
                 cursor.execute(sql, values)
                 connection.commit()
-        return redirect("/my_posts/edit?id=" + request.args["id"] )
+        return redirect("/my_posts/edit?id=" + request.args["id"])
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -404,7 +407,7 @@ def updatepost():
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
 
-                sql = """SELECT * FROM posts 
+                sql = """SELECT * FROM posts
                     LEFT JOIN users ON posts.user_id = users.id WHERE post_id = %s
                 """
                 cursor.execute(sql, request.args["id"])
@@ -427,14 +430,14 @@ def toggle_admin():
                 connection.commit()
     else:
         flash("You don't have permission to do that!", "warning")
-    return redirect("/")   
+    return redirect("/")
 
 # Likes -------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Checks if the user has already liked the post
 def user_liked(user_id, post_id):
     connection = create_connection()
-    
+
     try:
         with connection.cursor() as cursor:
             sql = "SELECT * FROM likes WHERE user_id = %s AND post_id = %s"
@@ -443,7 +446,7 @@ def user_liked(user_id, post_id):
 
             if result:
                 return True
-            else: 
+            else:
                 return False
     finally:
         connection.close()
