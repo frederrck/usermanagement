@@ -104,6 +104,7 @@ def view_profile():
 # Feed Page
 @app.route("/feed")
 def feed():
+    # Establish the env to reverse post order
     env = Environment()
     env.filters['reversed'] = reversed
     with create_connection() as connection:
@@ -123,6 +124,7 @@ def add_post():
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
+
 
                 audio = request.files["audio"]
                 if audio:
@@ -211,6 +213,7 @@ def signup():
             flash("That email already exists.", "info")
             return redirect("/signup")
 
+        # Check if the DOB is older than 14
         dob = datetime.strptime(request.form["dateofbirth"], "%Y-%m-%d")
         min_dob = datetime.now() - timedelta(days=14*365)  # 14 years old
         if dob >= min_dob:
@@ -252,6 +255,7 @@ def signup():
 #/update?id=1
 @app.route("/update", methods=["GET", "POST"])
 def update():
+    # Check if user has permission to update based on their ID
     if not can_access(request.args["id"]):
         flash("You don't have permission to do that", "warning")
         return redirect('/feed')
@@ -260,18 +264,23 @@ def update():
         with create_connection() as connection:
             with connection.cursor() as cursor:
 
+                # Retrieve password
                 password = request.form["password"]
+                # Use old password if not password inputted
                 if password:
                     encrypted_password = encrypt(password)
                 else:
                     encrypted_password = request.form["old_password"]
 
+                # Retrieve image
                 image = request.files["image"]
-
+                # Generate a filename for the image and save it
                 if image:
                     ext = os.path.splitext(image.filename)[1]
                     image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
+
+                    # remove old image if it exists
                     if request.form["old_image"]:
                         os.remove(request.form["old_image"])
                 else:
@@ -326,7 +335,7 @@ def delete():
             values = (request.args["id"])
             cursor.execute(sql, values)
 
-            # Check if the audio file ex
+            # Check if the audio file exists
             if "audio" in request.args and request.args["audio"] is not None and request.args["audio"]:
                 audio_file = request.args["audio"]
                 if os.path.exists(audio_file):
@@ -361,6 +370,7 @@ def updatepost():
         with create_connection() as connection:
             with connection.cursor() as cursor:
 
+                # Handling the file upload for new image
                 image = request.files["cvrimage"]
 
                 if image:
@@ -368,6 +378,7 @@ def updatepost():
                     image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
 
+                    # Check if there is and remove the old image.
                     if request.form["old_image"]:
                         if os.path.exists(request.form["old_image"]):
                             os.remove(request.form["old_image"])
@@ -375,6 +386,7 @@ def updatepost():
                             # Handle the case when the file doesn't exist
                             flash("Previous image file not found", "warning")
                 else:
+                    # No new image is provided, use the old image path
                     image_path = request.form["old_image"]
 
                 sql = """UPDATE posts SET
@@ -383,6 +395,7 @@ def updatepost():
                         WHERE post_id = %s
                     """
 
+                # If no new content is provided, use the older content 
                 if not request.form['content']:
                     values = (
                         request.form["old_content"],
@@ -390,6 +403,7 @@ def updatepost():
                         request.args['id']
                     )
                 else:
+                    # Update the post with the new content
                     values = (
                         request.form['content'],
                         image_path,
@@ -402,11 +416,14 @@ def updatepost():
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
+
+                # Retrieve user information based on session["id"]
                 sql = "SELECT * FROM users where id = %s"
                 values = (session["id"])
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
 
+                # Retrieve post along with user information.
                 sql = """SELECT * FROM posts
                     LEFT JOIN users ON posts.user_id = users.id WHERE post_id = %s
                 """
@@ -529,12 +546,14 @@ def like_post():
 
 #COMMENTS -------------------------------------------------------------------------------------------------------------------------------------------------
 
-# insert comment into database
+# Insert comment into database
 def add_comment(user_id, post_id, comment):
     connection = create_connection()
     try:
         with connection.cursor() as cursor:
+            # Check if 'comment' parameter is not empty, else pass
             if comment:
+                # SQL to insert comment into the database
                 sql = "INSERT INTO comments (user_id, post_id, comment) VALUES (%s, %s, %s)"
                 cursor.execute(sql, (user_id, post_id, comment))
             else:
@@ -566,11 +585,13 @@ def comment():
     post_id = request.args["post_id"] 
     comment = request.args["comment"]
 
+
     add_comment(user_id, post_id, comment)
 
     return redirect('/feed')
 
 
+# View a single post
 @app.route("/view_post")
 def viewpost():
     with create_connection() as connection:
