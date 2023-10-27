@@ -1,55 +1,52 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-
-
-
 <body style="background-color: white;">
     <div class="sign-container">
         <h1>Sign-Up</h1><br>
-            <form method='POST' enctype="multipart/form-data" action="/signup">
-            <!-- Personal -->
+        <form method='POST' enctype="multipart/form-data" action="/signup">
+            <!-- Personal Information -->
             <div class="row">
-                <div class = "col-md-5">
-                        <label class="form-label" for="first_name">First Name: </label><br />
-                        <input type="text" id="first_name" name="first_name" placeholder="John" required /><br />
+                <div class="col-md-5">
+                    <label class="form-label" for="first_name">First Name:</label><br />
+                    <input type="text" id="first_name" name="first_name" placeholder="John" required /><br />
                 </div>
-                <div class = "col-md-2">
-                </div>  
-                <div class = "col-md-5">
-                        <label class="form-label" for="last_name">Last Name: </label><br />
-                        <input type="text" id="last_name" name="last_name" placeholder="Doe"  required /><br />
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label" for="last_name">Last Name:</label><br />
+                    <input type="text" id="last_name" name="last_name" placeholder="Doe" required /><br />
                 </div>
             </div>
 
             <div class="row">
-                <div class = "col-md-5">
-                    <label class="form-label" for="email">Email: </label><br />
+                <div class="col-md-5">
+                    <label class="form-label" for="email">Email:</label><br />
                     <input type="email" id="email" name="email" placeholder="username@gmail.com" /><br />
                 </div>
-                <div class = "col-md-2">
-                </div>  
-                <div class = "col-md-5">
-                    <label class="form-label" or="dateofbirth">Date of Birth: </label><br />
-                    <input type="date" id="dateofbirth" name="dateofbirth" required /><br></br>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label" for="dateofbirth">Date of Birth:</label><br />
+                    <input type="date" id="dateofbirth" name="dateofbirth" required /><br><br>
                 </div>
             </div>
 
+            <!-- User Credentials -->
+            <label class="form-label" for="username">Enter a display name:</label><br />
+            <input type="text" id="username" name="username" required /><br />
 
-                <label class="form-label" for="username">Enter a display name: </label><br />
-                <input type="username" id="username" name="username" required/><br />
+            <!-- Password -->
+            <label class="form-label" for="password">Create a password:</label><br />
+            <input type="password" id="myInput" name="password" required /><br />
+            <input type="checkbox" onclick="myFunction"> Show Password<br /><br />
 
-                <label class="form-label" for="password">Create a password: </label><br />
-                <input type="password" id="myInput" name="password" required/><br /><input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
+            <!-- Profile Picture -->
+            <label class="form-label" for="image">Profile Picture</label><br />
+            <input type="file" id="profilepicture" name="image" accept="image/*" /><br /><br>
 
-
-
-                <label class="form-label" for="image">Profile Picture </label><br />
-                <input type="file" id="profilepicture" name="image" accept="image/*"/><br /><br>
-                <input type="submit" class="submitform" value="Complete Sign up"/>
-            </form>
+            <input type="submit" class="submitform" value="Complete Sign up" />
+        </form>
     </div>
 </body>
-
-
 {% endblock %}

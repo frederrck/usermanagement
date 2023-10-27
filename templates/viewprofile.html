@@ -1,88 +1,95 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-<body style="background-color: #4fd9b8;">
-
-<div class="color-head"></div>
-<div class="view-profile"> 
-    <img src = "{{ result["image"] or '/static/images/dftpfp.png' }}" alt = "profile">
-</div>
-
-<h2 style="text-align: center; color:#434178;margin-bottom:20px;">{{ result["first_name"]}} {{ result["last_name"]}}</h2>
-
-<div class="profile-info">
-    <div class="row profile-text">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-4">
-            <h3>Basic Information</h3>
-            <div class="basic-info border">
-                <div class="info-fields"> 
-                    <h4>Full Name</h4><p>{{ result["first_name"]}} {{ result["last_name"]}}</p>
-                    <h4>Username</h4><p>{{ result["username"] }}</p>
-                    <h4>Date of Birth</h4><p>{{result["dateofbirth"]}}</p> 
-                    <h4>Change Password</h4>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <h3>Contact Information</h3>
-            <div class="basic-info border">
-                <div class="info-fields"> 
-                    <h4>Email</h4><p>{{result["email"]}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-        </div>
+  <body style="background-color: #4fd9b8;">
+    <div class="color-head"></div>
+    <div class="view-profile">
+      <img src="{{ result["image"] or '/static/images/dftpfp.png' }}" alt="profile">
     </div>
-</div>
 
-<div class="joshbutton">
-  <button class="updatebtn"><a href="/update?id={{ result["id"]}}">Update Profile</a></button>
-</div>
+    <h2 style="text-align: center; color: #434178; margin-bottom: 20px;">
+      {{ result["first_name"] }} {{ result["last_name"] }}
+    </h2>
 
-</body>
+    <div class="profile-info">
+      <div class="row profile-text">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <h3>Basic Information</h3>
+          <div class="basic-info border">
+            <div class="info-fields">
+              <h4>Full Name</h4>
+              <p>{{ result["first_name"] }} {{ result["last_name"] }}</p>
+              <h4>Username</h4>
+              <p>{{ result["username"] }}</p>
+              <h4>Date of Birth</h4>
+              <p>{{ result["dateofbirth"] }}</p>
+              <h4>Change Password</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h3>Contact Information</h3>
+          <div class="basic-info border">
+            <div class="info-fields">
+              <h4>Email</h4>
+              <p>{{ result["email"] }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
 
-<div class="page-head">
-    <p> Your Posts </p>
-</div>
+    <div class="joshbutton">
+      <button class="updatebtn"><a href="/update?id={{ result["id"] }}">Update Profile</a></button>
+    </div>
+  </body>
 
-{% for _, row in result2|groupby('post_id')|reverse %}
+  <div class="page-head">
+    <p>Your Posts</p>
+  </div>
+
+  {% for _, row in result2|groupby('post_id')|reverse %}
     <div class="ind_post">
       <div class="row post-row">
         {% set post = row[0] %}
-        <div class = "col-md-6 right-post">
-          <div class = "postimg-container">
-            <img class="right-image" src="{{ post["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
-
-            <div class="song-title"> 
-              <h3>{{post["song_name"]}}</h3>
-              <h6>{{post["artist"]}}</h6>
+        <div class="col-md-6 right-post">
+          <div class="postimg-container">
+            <img class="right-image" src="{{ post["cover_img"] or '/static/images/noimage.png' }}" alt="cover-image">
+            <div class="song-title">
+              <h3>{{ post["song_name"] }}</h3>
+              <h6>{{ post["artist"] }}</h6>
             </div>
-
-            <audio controls class = "post-audio">
-                <source src="{{ post["audio"] or 'None'}}">
+            <audio controls class="post-audio">
+              <source src="{{ post["audio"] or 'None' }}">
             </audio>
-            <div class="post-content"> {{ post["content"]|safe }} </div>
+            <div class="post-content">{{ post["content"]|safe }}</div>
           </div>
-      </div>
-        <div class="col-md-6 left-post">  
-            <div class="post-user-details">
-              <a href="/view?id={{ post["user_id"]}}"><img class="post-img" src ="{{ post["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-              <a href="/view?id={{ post["user_id"]}}"" class="post-user">{{ post["username"]}}</a><br> 
-            </div>
-            
-            <div class="mypost-btn">
-                <button class="delbtn"><a href="/delete?id={{ post["post_id"]}}&audio={{ post["audio"]}}&user_id={{post["user_id"]}}" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a></button>
-                <button class="delbtn"><a href="/my_posts/edit?id={{ post["post_id"]}}&user_id={{post["user_id"]}}"><i class="fa-solid fa-pen-to-square"></i></a></button>
-                <button class="view-post"><a href="/view_post?id={{ post["post_id"]}}">View Post</a></button>
-            
-                Likes: {{ post["likes_count"]|default(0) }}
-            </div>
-            
-
-          <div class="cmt-section"> 
+        </div>
+        <div class="col-md-6 left-post">
+          <div class="post-user-details">
+            <a href="/view?id={{ post["user_id"] }}">
+              <img class="post-img" src="{{ post["image"] or '/static/images/dftpfp.png' }}" alt="profile-picture">
+            </a>
+            <a href="/view?id={{ post["user_id"] }}" class="post-user">{{ post["username"] }}</a><br>
+          </div>
+          <div class="mypost-btn">
+            <button class="delbtn">
+              <a href="/delete?id={{ post["post_id"] }}&audio={{ post["audio"] }}&user_id={{ post["user_id"] }}"
+                onclick="return confirm('Are you sure?')">
+                <i class="fa-solid fa-trash"></i>
+              </a>
+            </button>
+            <button class="delbtn">
+              <a href="/my_posts/edit?id={{ post["post_id"] }}&user_id={{ post["user_id"] }}">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>
+            </button>
+            <button class="view-post"><a href="/view_post?id={{ post["post_id"] }}">View Post</a></button>
+            Likes: {{ post["likes_count"]|default(0) }}
+          </div>
+          <div class="cmt-section">
             <h4>Comments:</h4>
             <div class="scrollcomments">
               {% for comment in row %}
@@ -91,18 +98,15 @@
                   <p>{{ comment["comment"] }}</p>
                 </div>
               {% endfor %}
-            </div> 
-
-            <form action="/feed/comment">  
-                <input name="post_id" value ="{{ post['post_id']}}" type = "hidden"> 
-                <input type="text" id="comment" name="comment" placeholder="Add a comment"/><br />
-                <button type="submit">Comment</button>
+            </div>
+            <form action="/feed/comment">
+              <input name="post_id" value="{{ post['post_id'] }}" type="hidden">
+              <input type="text" id="comment" name="comment" placeholder="Add a comment" /><br />
+              <button type="submit">Comment</button>
             </form>
           </div>
         </div>
-
       </div>
     </div>
-    {% endfor %}
-
+  {% endfor %}
 {% endblock %}

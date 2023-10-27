@@ -26,7 +26,7 @@ def create_connection():
     )
 
 
-# User can access if matching id or is admin
+# User can access if matching ID or is admin.
 def can_access(id):
     if "logged_in" in session:
         matching_id = session["id"] == int(id)
@@ -51,7 +51,7 @@ def home():
 
 
 # View Page
-@app.route("/view")
+@app.route("/viewuser")
 def view_user():
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -72,7 +72,7 @@ def view_user():
             }
             cursor.execute(sql, values)
             result2 = cursor.fetchall()
-    return render_template("view.html", result=result, result2=result2)
+    return render_template("view_user.html", result=result, result2=result2)
 
 
 # View Page
@@ -109,6 +109,7 @@ def feed():
     env.filters['reversed'] = reversed
     with create_connection() as connection:
         with connection.cursor() as cursor:
+            # SQL to fetch posts along with relevant information from 'users' and 'comments' table.
             sql = """SELECT * FROM posts LEFT JOIN users AS post_users ON posts.user_id = post_users.id
                     LEFT JOIN comments ON comments.post_id = posts.post_id LEFT JOIN users AS comment_users ON comments.user_id
                      = comment_users.id WHERE post_users.id != %s
@@ -162,6 +163,7 @@ def login():
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
+                # Retrieving user data based on email or username and password. 
                 sql = """SELECT * FROM users
                          WHERE (email = %s OR username = %s) AND password = %s"""
 
@@ -173,7 +175,10 @@ def login():
 
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
+
+        # Check if user credentials are found.
         if result:
+            # Setting session variables to indicate user is logged in. 
             session["logged_in"] = True
             session["id"] = result["id"]
             session["first_name"] = result["first_name"]
@@ -202,6 +207,7 @@ def email_exists(email):
             values = (email)
             cursor.execute(sql, values)
             result = cursor.fetchone()
+    # If result is found, then email exists in database. 
     return result is not None
 
 

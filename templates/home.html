@@ -2,26 +2,19 @@
 
 
 {% block content %}
+    {% if session["logged_in"] %}
 
-{% if session["logged_in"] %}
-
-
-{% else %}
-<div class="container home-head home">
-    <div class="head-text">
-        <h1>Listen to music for free!</h1>
-        <h4>Anywhere, Anytime.</h4>
-    </div>
-</div>
-<div class="container home-sub home">
-    <h2>Trending Music 2023</h2>
-    <button><a href = "/signup">Sign up to gain access to more music</a></button>
-
-    
-</div>
-{% endif %}
-
-
-
+    {% else %}
+        <div class="container home-head home">
+            <div class="head-text">
+                <h1>Listen to music for free!</h1>
+                <h4>Anywhere, Anytime.</h4>
+            </div>
+        </div>
+        <div class="container home-sub home">
+            <h2>Trending Music 2023</h2>
+            <button><a href = "/signup">Sign up to gain access to more music</a></button>
+        </div>
+    {% endif %}
 
 {% endblock %}

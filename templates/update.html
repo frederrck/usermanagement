@@ -1,44 +1,37 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-
 <div class="sign-container">
     <form method='POST' enctype="multipart/form-data">
         <h1>Update Profile</h1><br>
-        <input name="id" value ="{{ result['id']}}" type = "hidden">
-        <input name="old_password" type="hidden" value = "{{ result['password']}}">
-        <input name="old_image" type="hidden" value = "{{ result['image'] or 'None'}}">
+        <input name="id" value="{{ result['id'] }}" type="hidden">
+        <input name="old_password" type="hidden" value="{{ result['password'] }}">
+        <input name="old_image" type="hidden" value="{{ result['image'] or 'None' }}">
 
-        <!-- Personal -->
-        <label for="first_name">First Name: </label><br />
-        <input type="text" id="first_name" name="first_name" value="{{ result['first_name']}}" required /><br />
+        <!-- Personal Information -->
+        <label for="first_name">First Name:</label><br />
+        <input type="text" id="first_name" name="first_name" value="{{ result['first_name'] }}" required /><br />
 
-        <label for="last_name">Last Name: </label><br />
-        <input type="text" id="last_name" name="last_name" value="{{ result['last_name']}}" required /><br />
+        <label for="last_name">Last Name:</label><br />
+        <input type="text" id="last_name" name="last_name" value="{{ result['last_name'] }}" required /><br />
 
-        <label for="email">Email: </label><br />
-        <input type="email" id="email" name="email" value="{{ result['email']}}"  /><br />
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" name="email" value="{{ result['email'] }}" /><br />
 
-        <label for="username">Username: </label><br />
-        <input type="username" id="username" name="username" value="{{ result['username']}}"required/><br />
+        <label for="username">Username:</label><br />
+        <input type="text" id="username" name="username" value="{{ result['username'] }}" required /><br />
 
-        <label for="password">New Password: </label><br />
-        <input type="password" id="myInput" name="password"/><br />
+        <label for="password">New Password:</label><br />
+        <input type="password" id="myInput" name="password" /><br />
         <input type="checkbox" onclick="myFunction()"> Show Password<br /><br />
 
-        <label for="dateofbirth">Date of Birth: </label><br />
-        <input type="date" id="dateofbirth" name="dateofbirth" value="{{ result['dateofbirth']}}" required /><br /><br>
+        <label for="dateofbirth">Date of Birth:</label><br />
+        <input type="date" id="dateofbirth" name="dateofbirth" value="{{ result['dateofbirth'] }}" required /><br /><br>
 
-        <label for="image">Change Profile Picture </label><br />
-        <input type="file" id="image" name="image"/><br /><br>
+        <label for="image">Change Profile Picture</label><br />
+        <input type="file" id="image" name="image" /><br /><br>
 
-
-        <input class="submitform" type="submit" value="Complete Update"/>
-
+        <input class="submitform" type="submit" value="Complete Update" />
     </form>
 </div>
-
-
-
 {% endblock %}
-

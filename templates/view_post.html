@@ -1,63 +1,50 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-        <div class="ind_post">
-          <div class = "row">
-            <div class = "col-md-6 right-post">
-              <div class = "postimg-container">
-                <img class="right-image" src="{{ result["cover_img"] or '/static/images/noimage.png'}} " alt = "cover-image">
-                <div class="song-title"> 
-                  <h3>{{result["song_name"]}}</h3>
-                  <h6>{{result["artist"]}}</h6>
+<div class="ind_post">
+    <div class="row">
+        <div class="col-md-6 right-post">
+            <div class="postimg-container">
+                <img class="right-image" src="{{ result["cover_img"] or '/static/images/noimage.png' }}" alt="cover-image">
+                <div class="song-title">
+                    <h3>{{ result["song_name"] }}</h3>
+                    <h6>{{ result["artist"] }}</h6>
                 </div>
                 <audio controls class="post-audio">
-                  <source name="audio" value = "{{ result["audio"]}}" src="{{ result["audio"]}}">
+                    <source name="audio" value="{{ result["audio"] }}" src="{{ result["audio"] }}">
                 </audio>
                 <div class="post-content">{{ result["content"]|safe }}</div>
-              </div>
             </div>
-
-            <div class = "col-md-6 left-post">
-              <!-- Usable hidden fields -->
-              <input name="id" value ="{{ session['id']}}" type = "hidden">
-              <input name="post_id" value ="{{ result['post_id']}}" type = "hidden">
-              <input name="user_id" value ="{{ result['user_id']}}" type = "hidden">
-
-              <a><img class="post-img" src ="{{ result["image"] or '/static/images/dftpfp.png'}}" alt="profile-picture"></a>
-              <a class="post-user">{{ result["username"]}}</a><br>
-
-              
-              
-
-              {% if result['user_id'] == session["id"] %}
-              <div class="mypost-btn">
-                Likes: {{ result["likes_count"]|default(0) }}
-                <button class="delbtn"><a href="/delete?id={{ result["post_id"]}}&audio={{ result["audio"]}}" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a></button>
-                <button class="delbtn"><a href="/my_posts/edit?id={{ result["post_id"]}}" ><i class="fa-solid fa-pen-to-square"></i></a></button>
-                <button><a href="/viewprofile">Back</a></button>
-                
-              </div>  
-              {% else %}
-              <div class="mypost-btn">
-                Likes: {{ result["likes_count"]|default(0) }}
-                <form action="/feed/like" method="POST">
-                  <input name="post_id" value ="{{ result['post_id']}}" type = "hidden">   
-                  <button class="like-active" type="submit" name = "action" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
-                  <button type="submit" name = "action" value="dislike" aria-label="Dislike"><i class="fa-solid fa-thumbs-down"></i></button>
-                  
-                </form>
-                <button><a href="/feed">Back</a></button>
-                
-              </div>
-              {% endif %}
-
-            
-            </div>
-            
-
-            
-          </div>
         </div>
 
+        <div class="col-md-6 left-post">
+            <!-- Usable hidden fields -->
+            <input name="id" value="{{ session['id'] }}" type="hidden">
+            <input name="post_id" value="{{ result['post_id'] }}" type="hidden">
+            <input name="user_id" value="{{ result['user_id'] }}" type="hidden">
 
+            <a><img class="post-img" src="{{ result["image"] or '/static/images/dftpfp.png' }}" alt="profile-picture"></a>
+            <a class="post-user">{{ result["username"] }}</a><br>
+
+            {% if result['user_id'] == session["id"] %}
+            <div class="mypost-btn">
+                Likes: {{ result["likes_count"]|default(0) }}
+                <button class="delbtn"><a href="/delete?id={{ result["post_id"] }}&audio={{ result["audio"] }}" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a></button>
+                <button class="delbtn"><a href="/my_posts/edit?id={{ result["post_id"] }}"><i class="fa-solid fa-pen-to-square"></i></a></button>
+                <button><a href="/viewprofile">Back</a></button>
+            </div>
+            {% else %}
+            <div class="mypost-btn">
+                Likes: {{ result["likes_count"]|default(0) }}
+                <form action="/feed/like" method="POST">
+                    <input name="post_id" value="{{ result['post_id'] }}" type="hidden">
+                    <button class="like-active" type="submit" name="action" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
+                    <button type="submit" name="action" value="dislike" aria-label="Dislike"><i class="fa-solid fa-thumbs-down"></i></button>
+                </form>
+                <button><a href="/feed">Back</a></button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
