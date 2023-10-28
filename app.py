@@ -14,13 +14,13 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        host="10.0.0.17",
-        user="fremu",
-        # host="127.0.0.1",
-        # user="root",
-        password="ARENA",
-        db="fremu_test",
-        # db="user_management",
+        # host="10.0.0.17",
+        # user="fremu",
+        host="127.0.0.1",
+        user="root",
+        password=".magnesiumOxide123",
+        # db="fremu_test",
+        db="user_management",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -88,15 +88,12 @@ def view_profile():
             cursor.execute(sql, values)
             result = cursor.fetchone()
 
-            sql = """SELECT * FROM posts
-                    LEFT JOIN users ON posts.user_id
-                    = users.id WHERE users.id = %s
+            sql = """SELECT * FROM posts LEFT JOIN users AS post_users ON posts.user_id = post_users.id
+                    LEFT JOIN comments ON comments.post_id = posts.post_id LEFT JOIN users AS comment_users ON comments.user_id
+                     = comment_users.id WHERE post_users.id = %s
                 """
-
-            values = {
-                session["id"]
-            }
-            cursor.execute(sql, values)
+            
+            cursor.execute(sql, session["id"])
             result2 = cursor.fetchall()
     return render_template("viewprofile.html", result2=result2, result=result)
 
@@ -267,28 +264,41 @@ def update():
         return redirect('/feed')
 
     if request.method == "POST":
+
+        # Check if the DOB is older than 14
+        dob = datetime.strptime(request.form["dateofbirth"], "%Y-%m-%d")
+        min_dob = datetime.now() - timedelta(days=14*365)  # 14 years old
+        if dob >= min_dob:
+            flash("You must be at least 14 years old to sign up", "info")
+            return redirect("/update")
+        
         with create_connection() as connection:
             with connection.cursor() as cursor:
 
                 # Retrieve password
                 password = request.form["password"]
+
                 # Use old password if not password inputted
                 if password:
                     encrypted_password = encrypt(password)
                 else:
                     encrypted_password = request.form["old_password"]
 
+
                 # Retrieve image
                 image = request.files["image"]
+
                 # Generate a filename for the image and save it
                 if image:
                     ext = os.path.splitext(image.filename)[1]
                     image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
 
-                    # remove old image if it exists
+                    # Remove old image if it exists
                     if request.form["old_image"]:
-                        os.remove(request.form["old_image"])
+                        old_image_path = request.form["old_image"].lstrip('/')
+                        if os.path.exists(old_image_path):
+                            os.remove(old_image_path)
                 else:
                     image_path = request.form["old_image"]
 
@@ -415,9 +425,10 @@ def updatepost():
                         image_path,
                         request.args['id']
                     )
-
+                    flash("Update successful", "success")
                 cursor.execute(sql, values)
                 connection.commit()
+
         return redirect("/my_posts/edit?id=" + request.args["id"])
     else:
         with create_connection() as connection:
@@ -455,7 +466,7 @@ def toggle_admin():
         flash("You don't have permission to do that!", "warning")
     return redirect("/")
 
-# Likes -------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 # Checks if the user has already liked the post
 def user_liked(user_id, post_id):
@@ -550,7 +561,7 @@ def like_post():
     return redirect('/feed')
 
 
-#COMMENTS -------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 # Insert comment into database
 def add_comment(user_id, post_id, comment):

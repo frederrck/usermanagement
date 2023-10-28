@@ -4,16 +4,17 @@
   <div class="sign-container">
     <form method="POST" enctype="multipart/form-data">
       <h1>Edit Post</h1><br>
-      <input name="post_id" value="{{ result['post_id'] }}" type="hidden">
-      <input name="old_image" type="hidden" value="{{ result['cover_img'] or 'None' }}">
-      <input name="old_content" type="hidden" value="{{ result["content"] }}">
+      <!-- Post details before iteration (using result2) -->
+      <input name="post_id" value="{{ result2['post_id'] }}" type="hidden">
+      <input name="old_image" type="hidden" value="{{ result2['cover_img'] or 'None' }}">
+      <input name="old_content" type="hidden" value="{{ result2["content"] }}">
 
       <!-- Personal Information -->
       <label for="content">Edit Description:</label><br>
       <input type="text" id="content" name="content"><br>
 
       <label for="cvrimage">Change Profile Picture</label><br>
-      <input type="file" id="cvrimage" name="cvrimage"><br><br>
+      <input type="file" id="cvrimage" name="cvrimage" accept="image/*"><br><br>
 
       <a href="/my_posts/edit?id={{ result2["post_id"] }}">
         <input class="submitform" type="submit" value="Complete Update">

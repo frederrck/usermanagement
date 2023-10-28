@@ -389,7 +389,7 @@ img[alt=profile] {
 /* new ind feed */
 .ind_post{
     width:50%;
-    min-width: 780px;
+    min-width: 450px;
     margin: 0 auto;
     background-color:#434178;
     margin-top: 50px;
@@ -595,6 +595,7 @@ img[alt=profile] {
         width: 100%;
     }
 
+
 .comments{
     background-color:grey;
 }
@@ -610,7 +611,7 @@ img[alt=profile] {
 .scrollcomments{
     overflow-x: hidden;
     overflow-y: auto;
-    height:160px;
+    height:235px;
     padding:10px;
     background-color: #AFD2E9;
     
