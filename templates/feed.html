@@ -23,8 +23,8 @@
             </div>
             <div class="col-md-6 left-post">
                 <div class="post-user-details">
-                    <a href="/view?id={{ post["user_id"] }}"><img class="post-img" src="{{ post["image"] or '/static/images/dftpfp.png' }}" alt="profile-picture"></a>
-                    <a href="/view?id={{ post["user_id"] }}" class="post-user">{{ post["username"] }}</a><br>
+                    <a href="/viewuser?id={{ post["user_id"] }}"><img class="post-img" src="{{ post["image"] or '/static/images/dftpfp.png' }}" alt="profile-picture"></a>
+                    <a href="/viewuser?id={{ post["user_id"] }}" class="post-user">{{ post["username"] }}</a><br>
                 </div>
                 <div class="post-buttons">
                     <button class="view-post"><a href="/view_post?id={{ post["post_id"] }}">View Post</a></button>

@@ -14,13 +14,13 @@ app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
 
 def create_connection():
     return pymysql.connect(
-        # host="10.0.0.17",
-        # user="fremu",
-        host="127.0.0.1",
-        user="root",
-        password=".magnesiumOxide123",
-        # db="fremu_test",
-        db="user_management",
+        host="10.0.0.17",
+        user="fremu",
+        # host="127.0.0.1",
+        # user="root",
+        password="ARENA",
+        db="fremu_test",
+        # db="user_management",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -377,9 +377,9 @@ def delete():
 # Update Own Posts
 @app.route("/my_posts/edit", methods=["GET", "POST"])
 def updatepost(): 
-    # if not can_access(request.args["id"]):
-    #     flash("You don't have permission to do that")
-    #     return redirect('/')
+    if not can_access(request.args["id"]):
+        flash("You don't have permission to do that")
+        return redirect('/')
 
     
     if request.method == "POST":
