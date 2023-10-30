@@ -270,7 +270,7 @@ def update():
         min_dob = datetime.now() - timedelta(days=14*365)  # 14 years old
         if dob >= min_dob:
             flash("You must be at least 14 years old to sign up", "info")
-            return redirect("/update")
+            return redirect("/update?id=" + str(session["id"]))
         
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -377,7 +377,7 @@ def delete():
 # Update Own Posts
 @app.route("/my_posts/edit", methods=["GET", "POST"])
 def updatepost(): 
-    if not can_access(request.args["id"]):
+    if not can_access(request.args["user_id"]):
         flash("You don't have permission to do that")
         return redirect('/')
 
